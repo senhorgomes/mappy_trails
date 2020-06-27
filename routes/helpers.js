@@ -6,6 +6,10 @@
       }
     }
   };
+  function generateRandomString() {
+    let r = Math.random().toString(36).substring(2, 7);
+    return r;
+  }
 
   const authenticateUser = (email, users) => {
     const user = getUserByEmail(email, users);
@@ -36,4 +40,4 @@
 
 
 
-module.exports = {getUserByEmail, authenticateUser, mapsForUser, isLoggedIn};
+module.exports = {getUserByEmail, authenticateUser, mapsForUser, isLoggedIn, generateRandomString};

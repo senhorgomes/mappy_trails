@@ -7,7 +7,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { getUserByEmail, authenticateUser, mapsForUser, isLoggedIn } = require("./helpers.js");
+const {isLoggedIn, generateRandomString } = require("./helpers.js");
 
 module.exports = (db) => {
   router.get("/something", (req, res) => {
@@ -25,15 +25,20 @@ module.exports = (db) => {
 
   router.get("/register", (req, res) => {
     if (!isLoggedIn(req.session)) {
-
-      res.render("register");
+      templateVars ={
+        userId : req.session.userId
+      }
+      res.render("register", templateVars);
     } else {
       res.redirect("/");
     }
   });
 
   router.get("/login", (req, res) => {
-    res.render("login");
+    templateVars ={
+      userId : req.session.userId
+    }
+    res.render("login", templateVars);
   });
 
   router.post("/register", (req, res) => {
@@ -61,27 +66,25 @@ module.exports = (db) => {
     const name = req.body.email;
     const email = req.body.email;
     db.query(`
-    SELECT name, email`, [name, email])
-      .then(() => {
-        //setting the cookie in the users browser
-        req.session['userId'] = userId
-        res.redirect("/");
+    SELECT name, email FROM users
+    WHERE name = $1
+    AND email =$2
+    RETURNING*`, [name, email])
+      .then((data) => {
+        if (data.rowCount = 1) {
+          //setting the cookie in the users browser
+          userId = generateRandomString();
+          req.session['userId'] = userId
+          res.redirect("/");
+        } else {
+          res.status(403).send("Error! Name or email do not exist. Please register if you havent.")
+        }
       })
       .catch(err => {
         res
           .status(500)
           .json({ error: err.message });
       });
-    //make a function to extract user infor base on email
-    const userId = authenticateUser(email);
-    if (userId) {
-      //set cookie with user id
-      req.session.userId = userId;
-      res.redirect("/");
-    } else {
-      //user is not authenticated => error msg
-      res.status(403).send("email is incorrect!");
-    }
   });
 
   router.post("/logout", (req, res) => {
