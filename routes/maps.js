@@ -4,10 +4,11 @@
  *   these routes are mounted onto /widgets
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
-const { getUserByEmail, generateRandomString, authenticateUser, urlsForUser, isLoggedIn } = require("./helpers.js");
+const { getUserByEmail, authenticateUser, mapsForUser, isLoggedIn } = require("./helpers.js");
 
 const express = require('express');
 const router = express.Router();
+const generateHelpers = require('./helpers');
 
 module.exports = (db) => {
   router.get("/somethings", (req, res) => {

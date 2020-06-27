@@ -7,6 +7,7 @@
 
 const express = require('express');
 const router = express.Router();
+const { getUserByEmail, authenticateUser, mapsForUser, isLoggedIn } = require("./helpers.js");
 
 module.exports = (db) => {
   router.get("/something", (req, res) => {
@@ -23,40 +24,56 @@ module.exports = (db) => {
   });
 
   router.get("/register", (req, res) => {
-    res.render("register", templateVars);
+    if (!isLoggedIn(req.session)) {
+
+      res.render("register");
+    } else {
+      res.redirect("/");
+    }
   });
 
   router.get("/login", (req, res) => {
-    res.render("login", templateVars);
+    res.render("login");
   });
 
   router.post("/register", (req, res) => {
-    //add user to database (change line below)
-    const userId = generateRandomString();
+    const name = req.body.email;
     const email = req.body.email;
-    //looking up user based on email
-    const user = getUserByEmail(email, users);
-    if (email === "") {
-      res.status(403).send("user email is empty!");
-    } else if (!user) {
-      //add user to database (change below)
-      users[userId] = {
-        id: userId,
-        email,
-      }
-      //setting the cookie in the users browser
-      req.session['userId'] = userId
-      res.redirect("/");
-    } else {
-      res.status(403).send("user is already registered!");
-    }
+    //adding user to database
+    db.query(`
+    INSERT INTO users(name, email)
+     VALUES($1, $2)`, [name, email])
+      .then(() => {
+        //setting the cookie in the users browser
+        req.session['userId'] = userId
+        res.redirect("/");
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
   });
 
   router.post("/login", (req, res) => {
     //extract info from form with req.body from the login page!
+    const name = req.body.email;
     const email = req.body.email;
+    db.query(`
+    SELECT name, email`, [name, email])
+      .then(() => {
+        //setting the cookie in the users browser
+        req.session['userId'] = userId
+        res.redirect("/");
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
     //make a function to extract user infor base on email
-    const userId = authenticateUser(email, users);
+    const userId = authenticateUser(email);
     if (userId) {
       //set cookie with user id
       req.session.userId = userId;
