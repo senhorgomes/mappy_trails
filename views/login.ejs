@@ -16,6 +16,20 @@
 
   <body>
     <%- include('partials/_header') %>
-    <h1>Login Here</h1>
+      <form action="/login" method="post"> <!--Does this go to my_maps with a POST?-->
+        <!--Login area: -->
+        <label for="login" class="form-headers">Welcome back!</label>
+        <textarea name="email" placeholder="Login Email"></textarea>
+        <button class="buttons" id="login" type="submit">Login</button>
+      </form>
+        <!--Registration area: -->
+        <h2>Or if you're new here, register:</h2>
+        <form action="/login" method="post">
+        <label for="register" class="form-headers">What should we call you?</label>
+        <textarea name="trail_name" placeholder="Trail Name"></textarea>
+        <button class="buttons" id="register" type="register">Register</button>
+      </form>
   </body>
 </html>
+
+
