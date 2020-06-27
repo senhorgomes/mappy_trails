@@ -42,16 +42,20 @@ module.exports = (db) => {
   });
 
   router.post("/register", (req, res) => {
-    const name = req.body.email;
+    const name = req.body.user_name;
     const email = req.body.email;
+
     //adding user to database
     db.query(`
-    INSERT INTO users(name, email)
-     VALUES($1, $2)`, [name, email])
-      .then(() => {
+    INSERT INTO users(name, email) VALUES($1, $2);`, [name, email])
+      .then( data => {
         //setting the cookie in the users browser
+        userId = generateRandomString();
         req.session['userId'] = userId
-        res.redirect("/");
+        templateVars ={
+          userId : req.session.userId
+        }
+        res.redirect("/", templateVars);
       })
       .catch(err => {
         res
