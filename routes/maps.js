@@ -28,11 +28,25 @@ module.exports = (db) => {
 
   //displays a list of links to maps (with names) associated with the category chosen
   router.get("/categories/:category", (req, res) => {
-    let templateVars = {
-      category: req.params.category
-    }
-    //pass the category chosen to the view file
-    res.render("category", templateVars)
+    const category= req.params.category;
+    let query = `SELECT * FROM maps
+    WHERE category = $1`;
+    db.query(query, [category])
+      .then(data => {
+        let templateVars = {
+          category,
+          maps: data.rows,
+          userId : req.session.userId
+        }
+        //pass the category chosen to the view file
+        res.render("category", templateVars)
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
   });
 
   //renders a form for creating a new map upon clicking "create new map"
@@ -51,10 +65,23 @@ module.exports = (db) => {
 
   //displays the chosen map
   router.get("/maps/:id", (req, res) => {
-    let templateVars = {
-      chosenMap: req.params.id
-    }
-    res.render("display_map", templateVars)
+    const id= req.params.id;
+    let query = `SELECT * FROM maps
+    WHERE id = $1`;
+    db.query(query, [id])
+      .then(data => {
+        let templateVars = {
+          maps: data.rows,
+          userId : req.session.userId
+        }
+        //pass the category chosen to the view file
+        res.render("display_map", templateVars)
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
   });
 
   //displays the saved maps by the user

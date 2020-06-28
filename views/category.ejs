@@ -16,15 +16,18 @@
 
   <body>
     <%- include('partials/_header') %>
-    <h1>List of Categories</h1>
-    <div class="list_container">
-      <ul>
-        <h2 class="category_cafe">Coffee</h2>
-        <h2 class="category_bars">Watering Holes</h2>
-        <h2 class="category_art">Arts</h2>
-        <h2 class="category_food">Foods</h2>
-      </ul>
+    <main style="margin: 1em;">
+      <h3>Maps for <%=category %> </h3>
+      <% for(let map of maps) { %>
+        <ul>
+          <form class="form-inline" action="/maps/<%=map.id %>" method="GET">
+            <button type="submit" class="btn btn-outline-dark"><%= map.name %></button>
+          </form>
+        </ul>
+          <% } %>
 
-    </div> 
+    </main>
+
+
   </body>
 </html>
