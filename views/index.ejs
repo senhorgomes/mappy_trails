@@ -17,13 +17,21 @@
   <body>
     <%- include('partials/_header') %>
     <h1>Hello, Traveller!</h1>
-    <h3 class="slogan">This is where the slogan goes.</h3> 
+    <h3 class="slogan">This is where the slogan goes.</h3>
         <div class="list_container">
           <ul>
-            <h2 class="category_cafe">Coffee</h2>
-            <h2 class="category_bars">Watering Holes</h2>
-            <h2 class="category_art">Arts</h2>
-            <h2 class="category_food">Foods</h2>
+            <form class="form-inline" action="/categories/cafes" method="GET">
+            <button type="submit" class="btn btn-outline-dark, categories_coffee">Coffee</button>
+          </form>
+          <form class="form-inline" action="/categories/bars" method="GET">
+            <button type="submit" class="btn btn-outline-dark, category_bars" >Watering Holes</button>
+          </form>
+          <form class="form-inline" action="/categories/arts" method="GET">
+            <button type="submit" class="btn btn-outline-dark, category_art">Arts</button>
+          </form>
+          <form class="form-inline" action="/categories/restaurants" method="GET">
+            <button type="submit" class="btn btn-outline-dark, category_food">Foods</button>
+          </form>
           </ul>
         </div>
   </body>
