@@ -50,19 +50,17 @@ module.exports = (db) => {
     INSERT INTO users(name, email) VALUES($1, $2);`, [name, email])
       .then( data => {
         //setting the cookie in the users browser
-        userId = generateRandomString();
+        const userId = generateRandomString();
+        console.log(userId);
         req.session['userId'] = userId
-        templateVars ={
-          userId : req.session.userId
-        }
-        res.redirect("/", templateVars);
+
+        res.redirect("/");
       })
       .catch(err => {
         res
           .status(500)
           .json({ error: err.message });
       });
-
   });
 
   router.post("/login", (req, res) => {
@@ -72,8 +70,7 @@ module.exports = (db) => {
     db.query(`
     SELECT name, email FROM users
     WHERE name = $1
-    AND email =$2
-    RETURNING*`, [name, email])
+    AND email = $2;`, [name, email])
       .then((data) => {
         if (data.rowCount = 1) {
           //setting the cookie in the users browser

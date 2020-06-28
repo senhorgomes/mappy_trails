@@ -41,12 +41,10 @@ module.exports = (db) => {
     if (!isLoggedIn(req.session)) {
       res.status(403).send("Please login or register first.");
     } else {
-      const userDatabase = urlsForUser(userId, urlDatabase);
       let templateVars = {
-        userId,
-        urls: userDatabase,
-        users,
-      };
+        userId : req.session.userId
+      }
+
     res.render("new_map", templateVars);
     }
   });
@@ -65,13 +63,10 @@ module.exports = (db) => {
   if (!isLoggedIn(req.session)) {
     res.status(403).send("Please login or register first.");
   } else {
-    const userDatabase = urlsForUser(userId, urlDatabase);
-    let templateVars = {
-      userId,
-      urls: userDatabase,
-      users,
-    };
-    res.render("my_maps")
+    templateVars ={
+      userId : req.session.userId
+    }
+    res.render("my_maps", templateVars)
   }
   });
 
