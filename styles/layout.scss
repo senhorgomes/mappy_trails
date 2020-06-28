@@ -1,8 +1,10 @@
 body {
-  background-color: #EEE;
-
+  background-image: url("../images/BACKGROUNDnik-shuliahin-rkFIIE9PxH0-unsplash.jpg");
+  // filter: blur(8px);
+  // -webkit-filter: blur(8px);
+  
   h1 {
-    color: #244751;
+    color: #595959;
   }
 }
 
@@ -10,30 +12,72 @@ body {
 .category {
   border-radius: 5em;
   background-position: left top;
-  background-repeat: repeat;
+  // background-repeat: repeat;
   width: 12em;
   height: 12em;
   box-shadow: 5px 10px #595959;
-
+  background-size: contain;
+  font-size: 1em;
 }
 
 #foods {
+  color: #87b6A7;
   border: 3px solid #87b6A7;
-  background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
-  // background-image: url('/public/images/FOODthought-catalog-9aOswReDKPo-unsplash.jpg');
+  background-image: url("../images/FOODthought-catalog-9aOswReDKPo-unsplash.jpg");
 }
 
 #arts {
+  color: #45CB85;
   border: 3px solid #45CB85;
-  background: url(data:public/images/ARTSlucas-sankey-4Ir9T2-1G_k-unsplash.jpg); 
+  background-image: url("../images/ARTSlucas-sankey-4Ir9T2-1G_k-unsplash.jpg");
+  
 }
 
 #cafes {
+  color: #E3F09B;
   border: 3px solid #E3F09B;
-  background: url(public/images/COFFEEnathan-dumlao-XOhI_kW_TaM-unsplash.jpg);
+  background-image: url("../images/COFFEEnathan-dumlao-XOhI_kW_TaM-unsplash.jpg");
 }
 
 #bars {
+  color: #F7D08A;
   border: 3px solid #F7D08A;
-  background: url(public/images/BARSadam-jaime-dmkmrNptMpw-unsplash.jpg);
+  background-image: url("../images/BARSadam-jaime-dmkmrNptMpw-unsplash.jpg");
 }
+//Attempting to change the body styles, but this is being overridden???REBOOT FILE???
+body {
+  background-color: #595959;
+  border-radius: 5em;
+  border-color: red;
+  background-position: left top;
+}
+
+// For the nav-bar elements
+.navbar-custom {
+  display: flex;
+  justify-content: space-between;
+  background-color: #FCD0A1;
+}/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: #87b6A7;
+    text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
+}/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: #45CB85;
+}
+
+
+
+
+//Color Palette:
+// color: #F79F79 Darker Peachy
+// color: #F7D08A Sherbet Orange
+// color: #E3F09B Electric Lemon
+// color: #87b6A7 Dark seafoam
+// color: #FCD0A1 Champagne
+// color: #5B5941 Shadow brown
+// color: #595959 Shadowy gray
+// color: #7F7F7F Lighter gray
+// color: #57E2E5 Turquoise	
+// color: #45CB85 Emerald
