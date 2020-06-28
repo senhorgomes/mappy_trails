@@ -55,6 +55,7 @@ module.exports = (db) => {
     if (!isLoggedIn(req.session)) {
       res.status(403).send("Please login or register first.");
     } else {
+
       let templateVars = {
         userId : req.session.userId
       }
@@ -90,10 +91,23 @@ module.exports = (db) => {
   if (!isLoggedIn(req.session)) {
     res.status(403).send("Please login or register first.");
   } else {
-    templateVars ={
-      userId : req.session.userId
-    }
-    res.render("my_maps", templateVars)
+    let query = `SELECT maps.id, maps.name, maps.category FROM maps JOIN users ON owner_id = users.id
+    WHERE users.email = $1`;
+    db.query(query, [userId])
+      .then(data => {
+        let templateVars = {
+          maps: data.rows,
+          userId : req.session.userId
+        }
+        //pass the category chosen to the view file
+        res.render("my_maps", templateVars)
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
   }
   });
 
@@ -114,10 +128,33 @@ module.exports = (db) => {
   });
 
   //deleting maps => to be figured out
-  router.delete("/maps/:id/", (req, res) => {
+  router.post("/maps/:id/", (req, res) => {
     //delete map from data base
-    res.redirect("/profile/maps");
-  });
+    id = req.params.id;
+    const userId = req.session.userId;
+    if (!isLoggedIn(req.session)) {
+      res.status(403).send("Please login or register first.");
+    } else {
+      let query = `DELETE FROM maps
+      WHERE id = $1`;
+      db.query(query, [id])
+        .then(data => {
+          let templateVars = {
+            maps: data.rows,
+            userId : req.session.userId
+          }
+          res.render("my_maps", templateVars)
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+          });
+
+        }
+        });
+
+
 
   return router;
 };

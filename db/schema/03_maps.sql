@@ -4,5 +4,6 @@ CREATE TABLE maps (
   name VARCHAR(255) NOT NULL,
   description VARCHAR(255) NOT NULL,
   category VARCHAR(255) NOT NULL,
+  is_favourite BOOLEAN NOT NULL DEFAULT FALSE,
   owner_id INTEGER REFERENCES users(id)
 );

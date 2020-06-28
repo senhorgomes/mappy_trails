@@ -50,7 +50,7 @@ module.exports = (db) => {
     INSERT INTO users(name, email) VALUES($1, $2);`, [name, email])
       .then( data => {
         //setting the cookie in the users browser
-        const userId = generateRandomString();
+        const userId = email;
         console.log(userId);
         req.session['userId'] = userId
 
@@ -74,7 +74,7 @@ module.exports = (db) => {
       .then((data) => {
         if (data.rowCount = 1) {
           //setting the cookie in the users browser
-          userId = generateRandomString();
+          userId = email;
           req.session['userId'] = userId
           res.redirect("/");
         } else {
