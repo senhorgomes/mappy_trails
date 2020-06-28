@@ -1,23 +1,39 @@
-// $font-stack: 
-// $primary-color:
-// $background-color: 
-
-
-//Color Palette:
-// color: #F79F79
-// color: #F7D08A;
-// color: #E3F09B;
-// color: #87b6A7;
-// color: #FCD0A1;
-// color: #595959;
-// color: #7F7F7F;
-// color: #57E2E5;	
-
-
 body {
   background-color: #EEE;
 
   h1 {
     color: #244751;
   }
+}
+
+
+.category {
+  border-radius: 5em;
+  background-position: left top;
+  background-repeat: repeat;
+  width: 12em;
+  height: 12em;
+  box-shadow: 5px 10px #595959;
+
+}
+
+#foods {
+  border: 3px solid #87b6A7;
+  background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+  // background-image: url('/public/images/FOODthought-catalog-9aOswReDKPo-unsplash.jpg');
+}
+
+#arts {
+  border: 3px solid #45CB85;
+  background: url(data:public/images/ARTSlucas-sankey-4Ir9T2-1G_k-unsplash.jpg); 
+}
+
+#cafes {
+  border: 3px solid #E3F09B;
+  background: url(public/images/COFFEEnathan-dumlao-XOhI_kW_TaM-unsplash.jpg);
+}
+
+#bars {
+  border: 3px solid #F7D08A;
+  background: url(public/images/BARSadam-jaime-dmkmrNptMpw-unsplash.jpg);
 }
