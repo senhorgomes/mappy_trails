@@ -19,6 +19,9 @@ body {
 
 
 .category {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 5em;
   background-position: left top;
   // background-repeat: repeat;
@@ -28,10 +31,21 @@ body {
   background-size: contain;
   font-size: 1em;
 }
-h2 {
+.category p {
+  font-size: 1.5em;
+}
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.firstRow {
+  display: flex;
 }
 #foods {
   color: #87b6A7;
