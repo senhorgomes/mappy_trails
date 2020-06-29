@@ -38,7 +38,7 @@ for delete button: <method: delete, action "/maps:id">
           <tbody>
             <% for(let map of maps) { %>
             <tr>
-              <td><%= map.name %></td>
+              <td><a  href="/maps/<%= map.id%>"><%= map.name %></a></td>
               <td><%= map.category.charAt(0).toUpperCase()+map.category.slice(1) %> </td>
               <td>
                 <form method="GET" action="/maps/<%= map.id%>">
