@@ -54,4 +54,3 @@ INSERT INTO pointsmaps (id, point_id, map_id) VALUES (DEFAULT, 28, 8);
 
 --Art locations
 INSERT INTO pointsmaps (id, point_id, map_id) VALUES (DEFAULT, 29, 9);
-INSERT INTO pointsmaps (id, point_id, map_id) VALUES (DEFAULT, 30, 9);

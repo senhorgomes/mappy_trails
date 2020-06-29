@@ -1,28 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Map</title>
 
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+<head>
+  <title>Map</title>
+  <style>
+    /* Set the size of the div element that contains the map */
+   #map {
+     height: 400px;
+     width: 100%;
+    }
 
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+ </style>
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  </head>
+</head>
 
-  <body>
-    <%- include('partials/_header') %>
-    <h1>Map Named: <%= maps[0].name %> Displayed Here</h1>
-    <div class="map_container">
-      <!--Information about the map, favorites, etc. goes at the top of this space??
+<body>
+  <%- include('partials/_header') %>
+  <h1>Map Named: <%= maps[0].name %> Displayed Here</h1>
+  <div class="map_container">
+    <!--Information about the map, favorites, etc. goes at the top of this space??
       A button for selecting a favorite, the title of the map/trail name of user who created it-->
-      <div>
-        <!--map will be displayed here-->
-      </div>
-    </div>
-  </body>
+
+    <!--map will be displayed here-->
+    <div id="map"></div>
+    <script>
+      // Initialize and add the map
+      function initMap() {
+        // The location of Uluru
+        var uluru = { lat: -25.344, lng: 131.036 };
+        // The map, centered at Uluru
+        var map = new google.maps.Map(
+          document.getElementById('map'), { zoom: 4, center: uluru });
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({ position: uluru, map: map });
+      }
+      initMap();
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgNY0jokZRJtIF_RJyCC0J7VYsqiCX18&callback=initMap">
+    </script>
+  </div>
+
+</body>
+
 </html>
