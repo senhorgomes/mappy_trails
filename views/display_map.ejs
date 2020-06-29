@@ -5,18 +5,22 @@
   <title>Map</title>
   <style>
     /* Set the size of the div element that contains the map */
-   #map {
-     height: 400px;
-     width: 100%;
+    #map {
+      height: 400px;
+      width: 100%;
     }
-
- </style>
+  </style>
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgNY0jokZRJtIF_RJyCC0J7VYsqiCX18">
+    </script>
+
+
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -30,24 +34,12 @@
       A button for selecting a favorite, the title of the map/trail name of user who created it-->
 
     <!--map will be displayed here-->
-    <div id="map"></div>
-    <script>
-      // Initialize and add the map
-      function initMap() {
-        // The location of Uluru
-        var uluru = { lat: -25.344, lng: 131.036 };
-        // The map, centered at Uluru
-        var map = new google.maps.Map(
-          document.getElementById('map'), { zoom: 4, center: uluru });
-        // The marker, positioned at Uluru
-        var marker = new google.maps.Marker({ position: uluru, map: map });
-      }
-      initMap();
-    </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgNY0jokZRJtIF_RJyCC0J7VYsqiCX18&callback=initMap">
-    </script>
+    <div id="map">
+
+    </div>
+
   </div>
 
 </body>
-
+<script type="text/javascript" src="/scripts/googleMaps.js"></script>
 </html>

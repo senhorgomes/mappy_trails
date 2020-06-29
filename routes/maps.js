@@ -67,16 +67,42 @@ module.exports = (db) => {
   //displays the chosen map
   router.get("/maps/:id", (req, res) => {
     const id= req.params.id;
-    let query = `SELECT * FROM maps
-    WHERE id = $1`;
+    let query = `SELECT *, maps.name  FROM maps
+    JOIN pointsmaps ON maps.id = pointsmaps.map_id
+    JOIN points ON points.id = pointsmaps.point_id
+    WHERE maps.id = $1`;
     db.query(query, [id])
       .then(data => {
         let templateVars = {
           maps: data.rows,
           userId : req.session.userId
         }
+
         //pass the category chosen to the view file
         res.render("display_map", templateVars)
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.get("/maps/:id/markers", (req, res) => {
+    const id= req.params.id;
+    let query = `SELECT *, maps.name  FROM maps
+    JOIN pointsmaps ON maps.id = pointsmaps.map_id
+    JOIN points ON points.id = pointsmaps.point_id
+    WHERE maps.id = $1`;
+    db.query(query, [id])
+      .then(data => {
+        let templateVars = {
+          maps: data.rows,
+          userId : req.session.userId
+        }
+
+        //pass the category chosen to the view file
+        res.json(templateVars);
       })
       .catch(err => {
         res
