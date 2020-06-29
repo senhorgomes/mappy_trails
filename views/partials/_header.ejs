@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-success">
+  <nav class="navbar navbar-expand-md navbar-custom">
     <a class="navbar-brand" href="/">Categories</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,8 +11,8 @@
     <div class="d-flex justify-content-end">
       <% if(userId){ %>
         <div class="navbar-nav">
-          <a class="nav-item nav-link" href="/profile/maps">My Maps</a>
-          <a class="nav-item nav-link" href="/maps/new">Create a New Map</a>
+          <a class="nav-item nav-link" id="head-maps" href="/profile/maps">My Maps</a>
+          <a class="nav-item nav-link" id="head-new" href="/maps/new">Create a New Map</a>
         </div>
       <form class="form-inline" action="/logout" method="POST">
         <p class="h6" style="margin-bottom: 10px; margin-top:10px; margin-right: 10px">Logged in as
