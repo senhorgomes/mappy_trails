@@ -18,16 +18,23 @@
     <%- include('partials/_header') %>
     <h1>Hello, Traveller!</h1>
     <h3 class="slogan">This is where the slogan goes.</h3> 
-        <div class="list_container">
-          <ul>
-            <div class="category" id="cafes">Coffee</div>
-            <div class="category" id="bars">Watering Holes</div>
-            <div class="category" id="arts"> 
-              <!-- <img src="https://source.unsplash.com/8urjFhaVRCk"> -->
-              Arts
-            </div>
-            <div class="category" id="foods">Foods</div>
-          </ul>
+    <div class="container"></div>
+      <div class="row">
+        <div class="col">
+          <h2 class="category" id="cafes">Coffee</h2>
         </div>
+        <div class="col">
+          <h2 class="category" id="bars">Watering Holes</h2>
+        </div>
+      </div>
+    <div class="row">
+        <div class="col">
+          <h2 class="category" id="arts">Arts</h2>
+      </div>
+        <div class="col">
+          <h2 class="category" id="foods">Foods</h2>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -17,13 +17,19 @@
   <body>
     <%- include('partials/_header') %>
     <h1>List of Categories</h1>
-    <div class="list_container">
-      <ul>
-        <h2 class="category" id="cafes">Coffee</h2>
-        <h2 class="category" id="bars">Watering Holes</h2>
+    <div class="container"></div>
+      <div class="row">
+        <div class="col">  
+          <h2 class="category" id="cafes">Coffee</h2>
+        </div>
+        <div class="col">
+          <h2 class="category" id="bars">Watering Holes</h2>
+        </div>
+      </div>
+      <div class="row">
         <h2 class="category" id="arts">Arts</h2>
         <h2 class="category" id="foods">Foods</h2>
-      </ul>
-    </div> 
+      </div>
+    </div>
   </body>
 </html>
