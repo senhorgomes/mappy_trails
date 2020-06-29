@@ -16,6 +16,7 @@
 
   <body>
     <%- include('partials/_header') %>
+    <div id="login-box">
       <form action="/login" method="post"> <!--Does this go to my_maps with a POST?-->
         <!--Login area: -->
         <label for="login" class="form-headers">Welcome back!</label>
@@ -23,6 +24,8 @@
         <textarea name="email" placeholder="Login Email"></textarea>
         <button class="buttons" id="login" type="submit">Login</button>
       </form>
+    </div>
+      <div id="registration-box">
         <!--Registration area: -->
         <h2>Or if you're new here, register:</h2>
         <form action="/register" method="post">
@@ -31,6 +34,7 @@
         <textarea name="email" placeholder="example@gmail.com"></textarea>
         <button class="buttons" id="register" type="submit">Register</button>
       </form>
+    </div>
   </body>
 </html>
 
