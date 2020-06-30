@@ -55,16 +55,15 @@ h2, h3, h4, h5, h6 {
   align-items: center;
   border-radius: 5em;
   background-position: left top;
-  // background-repeat: repeat;
   width: 12em;
   height: 12em;
   box-shadow: 5px 10px #595959;
   background-size: contain;
 }
 .category:hover {
-  transform: perspective(1px) translateZ(0);
+  transform: perspective(100px) translateZ(0.25em);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  transition-duration: 0.5s;
+  transition-duration: 0.2s;
   transition-property: transform;
 }
 .category p {
