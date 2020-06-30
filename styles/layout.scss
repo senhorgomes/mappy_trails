@@ -36,13 +36,14 @@ h1 {
 }
 
 h2, h3, h4, h5, h6 {
+  padding-top: .25em;
   font-family: 'Shadows Into Light', cursive;
   color: #5B5941;
   text-shadow: 1px 2px 0px #FCD0A1;
   text-align: center;
 }
 
-#header-box {
+.header-box {
   background-color: rgba(231,216,201, .4);
   padding-bottom: 0.25em;
 }
@@ -202,6 +203,19 @@ a {
   padding: .1rem;
   fill: white;
 }
+
+//For my_maps page tables:
+td {
+  background-color: rgba(231,216,201, .4);
+  padding-bottom: 0.25em;
+}
+
+th {
+  background-color: rgba(127,127,127, .4);
+  padding-bottom: 0.25em;
+}
+
+
 
 
 //Color Palette:
