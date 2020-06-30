@@ -26,6 +26,18 @@ a {
   text-decoration: none!important;
 }
 
+h1 {
+  color: #5B5941;
+  text-shadow: 2px 3px 0px #FCD0A1;
+  text-align: center;
+}
+
+h2, h3, h4, h5, h6 {
+  color: #5B5941;
+  text-shadow: 2px 3px 0px #FCD0A1;
+  text-align: center;
+}
+
 .category {
   display: flex;
   justify-content: center;
@@ -51,7 +63,6 @@ a {
                 0px 8px 13px rgba(0,0,0,0.1),
                 0px 18px 23px rgba(0,0,0,0.1);
 }
-
 
 .container {
   display: flex;
@@ -95,12 +106,12 @@ a {
 }
 
 //Attempting to change the body styles, but this is being overridden???REBOOT FILE???
-body {
-  background-color: #595959;
-  border-radius: 5em;
-  border-color: red;
-  background-position: left top;
-}
+// body {
+//   background-color: #595959;
+//   border-radius: 5em;
+//   border-color: red;
+//   background-position: left top;
+// }
 
 
 //For the buttons:
