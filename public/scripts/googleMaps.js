@@ -12,14 +12,19 @@ $(() => {
       url: "/maps/" + window.location.href.split('/').filter(e => e !== "")[3] + "/markers"
     }).done((data) => {
       for (marker of (data.maps)) {
-        let tempmarker = new google.maps.Marker({
+        let infowindow = new google.maps.InfoWindow({
+          content: `<h5 >${marker.points_name}</h5>
+          <p>${marker.description}</p>`
+        })
+        let googleMarker = new google.maps.Marker({
           position: { lat: Number(marker.latitude), lng: Number(marker.longitude) },
           map: googleMap,
-          title: 'Hello World!'
+        })
+        googleMarker.addListener('click', function() {
+          infowindow.open(googleMap, googleMarker);
         })
       }
-    });
-
+      })
   }
   initMap();
 
