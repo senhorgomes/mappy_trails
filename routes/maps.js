@@ -210,7 +210,7 @@ module.exports = (db) => {
     const pointLat = req.body.point_latitude;
     const pointLong = req.body.point_long;
     if (pointName) {
-      let query2 = `INSERT INTO points VALUES ($1, $2, $3, $4)`
+      let query2 = `INSERT INTO points (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
       db.query(query2, [pointName, pointDescription, pointLat, pointLong])
       .then(res => {
         let resp
