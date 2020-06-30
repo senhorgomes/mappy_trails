@@ -134,8 +134,25 @@ a {
 }
 
 .button-head {
-  text-size-adjust: 80%;
   color: #fff;
+  background-color: #595959;
+  border-color: #F7D08A;
+  font-family: 'Rye', cursive;
+  letter-spacing: 0.05em;
+  border-radius: 0;
+}
+
+#button-edit {
+  color: #57E2E5;
+  background-color: #595959;
+  border-color: #F7D08A;
+  font-family: 'Rye', cursive;
+  letter-spacing: 0.05em;
+  border-radius: 0;
+}
+
+#button-delete {
+  color: #f81b1b;
   background-color: #595959;
   border-color: #F7D08A;
   font-family: 'Rye', cursive;

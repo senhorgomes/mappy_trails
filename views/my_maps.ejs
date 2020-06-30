@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <title>My Map</title>
-
+    
+    <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
@@ -42,11 +43,11 @@ for delete button: <method: delete, action "/maps:id">
               <td><%= map.category.charAt(0).toUpperCase()+map.category.slice(1) %> </td>
               <td>
                 <form method="GET" action="/maps/<%=map.id%>/edit/">
-                  <button type="submit" class="btn btn-primary">Edit</button>
+                  <button type="submit" id="button-edit">Edit</button>
                 </form>
               <td>
                 <form method="POST" action="/maps/<%= map.id%>">
-                  <button type="submit" class="btn btn-danger">Delete</button>
+                  <button type="submit" id="button-delete">Delete</button>
                 </form>
               </td>
             </tr>
