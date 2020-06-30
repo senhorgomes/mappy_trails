@@ -41,7 +41,7 @@ for delete button: <method: delete, action "/maps:id">
               <td><a  href="/maps/<%= map.id%>"><%= map.name %></a></td>
               <td><%= map.category.charAt(0).toUpperCase()+map.category.slice(1) %> </td>
               <td>
-                <form method="GET" action="/maps/<%= map.id%>">
+                <form method="GET" action="/maps/<%=map.id%>/edit/">
                   <button type="submit" class="btn btn-outline-primary">Edit</button>
                 </form>
               <td>

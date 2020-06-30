@@ -27,7 +27,7 @@ module.exports = (db) => {
   });
 
   //displays a list of links to maps (with names) associated with the category chosen
-  router.get("/categories/:category", (req, res) => {
+  router.get("/categories/:category/", (req, res) => {
     const category = req.params.category;
     let query = `SELECT * FROM maps
     WHERE category = $1`;
@@ -50,7 +50,7 @@ module.exports = (db) => {
   });
 
   //renders a form for creating a new map upon clicking "create new map"
-  router.get("/maps/new", (req, res) => {
+  router.get("/maps/new/", (req, res) => {
     const userId = req.session.userId;
     if (!isLoggedIn(req.session)) {
       res.status(403).send("Please login or register first.");
@@ -65,14 +65,18 @@ module.exports = (db) => {
   });
 
   //displays the chosen map
-  router.get("/maps/:id", (req, res) => {
-    const id = req.params.id;
-    let query = `SELECT maps.name AS name, maps.category,maps.owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description, points.name AS points_name FROM maps
+  router.get("/maps/:id/", (req, res) => {
+    console.log(req.session.userId);
+
+    const mapId = req.params.id;
+    console.log(mapId);
+    let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS id, points.latitude, points.longitude, points.description, points.name AS points_name FROM maps
     JOIN pointsmaps ON maps.id = pointsmaps.map_id
     JOIN points ON points.id = pointsmaps.point_id
     WHERE maps.id = $1`;
-    db.query(query, [id])
+    db.query(query, [mapId])
       .then(data => {
+        console.log(data.rows);
         let templateVars = {
           maps: data.rows,
           userId: req.session.userId
@@ -89,7 +93,7 @@ module.exports = (db) => {
 
   router.get("/maps/:id/markers", (req, res) => {
     const id = req.params.id;
-    let query = `SELECT maps.name AS name, maps.category,maps.owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description, points.name AS points_name FROM maps
+    let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description, points.name AS points_name FROM maps
     JOIN pointsmaps ON maps.id = pointsmaps.map_id
     JOIN points ON points.id = pointsmaps.point_id
     WHERE maps.id = $1`;
@@ -110,18 +114,61 @@ module.exports = (db) => {
   });
 
   //saves the map as favourite NEED DATABASE!!
-  router.post("/maps/:id/favourites/", (req, res) => {
+  router.get("/maps/:id/favorites/", (req, res) => {
+    const id = req.params.id;
+
     const mapId = req.params.id;
     const userId = req.session.userId;
-    const mapOwnerId = getOwnerId(req.session.userId);
 
     if (!isLoggedIn(req.session)) {
       res.status(403).send("Please login or register first.");
     } else {
-      let query = `INSERT INTO favouritemaps VALUES ($1,$2)`;
-      db.query(query, [mapId, mapOwnerId])
+      const promiseObj = new Promise(getOwnerId)
+      promiseObj.then(() => {
+        console.log(result);
+      })
+        .catch(() => {
+          console.log('Error')
+        })
+      // console.log("clicked");
+      // let query = `INSERT INTO usermaps VALUES ($1, $2)`;
+      // db.query(query, [mapOwnerId, mapId])
 
     }
+  });
+  //edit the map
+  router.get("/maps/:id/edit/", (req, res) => {
+    const id = req.params.id;
+
+    const mapId = req.params.id;
+    const userId = req.session.userId;
+
+    if (!isLoggedIn(req.session)) {
+      res.status(403).send("Please login or register first.");
+    } else {
+      let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description AS points_description, points.name AS points_name FROM maps
+  JOIN pointsmaps ON maps.id = pointsmaps.map_id
+  JOIN points ON points.id = pointsmaps.point_id
+  WHERE maps.id = $1`;
+      db.query(query, [id])
+        .then(data => {
+          let templateVars = {
+            maps: data.rows,
+            userId: req.session.userId
+          }
+          res.render("edit_map", templateVars);
+
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+
+
+
+    }
+
   });
 
   //shows saved maps by the user
@@ -169,21 +216,12 @@ module.exports = (db) => {
     const pointLat = req.body.point_latitude;
     const pointLong = req.body.point_long;
     if (mapName) {
-      let query = `
-  // INSERT INTO maps VALUES ($1, $2, $3, $4)
-  // RETURNING *;`;
+      let query = `INSERT INTO maps VALUES ($1, $2, $3, $4)`;
       db.query(query, [mapName, mapDescription, mapCategory, mapOwnerId])
-        .then(data => {
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+
     }
     if (pointName) {
-      let query2 = `
-        INSERT INTO points VALUES ($1, $2, $3, $4) RETURNING *;`
+      let query2 = `INSERT INTO points VALUES ($1, $2, $3, $4)`
       db.query(query2, [pointName, pointDescription, pointLat, pointLong])
     }
 
@@ -219,15 +257,15 @@ module.exports = (db) => {
     }
   });
 
-  const getOwnerId = function (email) {
+  function getOwnerId(resolve, reject) {
     const query = `SELECT id FROM users
-  WHERE email =$1;`
-    db.query(query, [email])
+  WHERE email = $1;`
+    db.query(query, [req.session.userId])
       .then(data => {
-        console.log(data.rows);
-        return data.rows;
+        return data;
 
       })
+
   }
 
   return router;
