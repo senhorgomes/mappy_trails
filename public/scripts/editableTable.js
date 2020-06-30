@@ -1,8 +1,8 @@
 const $tableID = $('#table');
- const $BTN = $('#export-btn');
- const $EXPORT = $('#export');
+const $BTN = $('#export-btn');
+const $EXPORT = $('#export');
 
- const newTr = `
+const newTr = `
  <tr>
  <td class="pt-3-half" contenteditable="true"></td>
  <td class="pt-3-half" contenteditable="true"></td>
@@ -14,63 +14,103 @@ const $tableID = $('#table');
  </td>
 </tr>`;
 
- $('.table-add').click(() => {
+$('.table-add').click(() => {
 
-     $('tbody').append(newTr);
- });
+  $('tbody').append(newTr);
+});
+// $(document).ready(() => {
+//   $('.save').click((evt) => {
+//     const data = {};
+//     console.log(this, evt.target)
+//     $(this).parents('tr').find('td').each(() => {
+//       const tableCell = $(this)
+//       console.log(tableCell);
 
- $tableID.on('click', '.table-remove', function () {
+//       const valueName = $(tableCell).find("input").attr("name")
+//       const value = $(tableCell).text()
+//       data[valueName] = value;
+//     })
+//     console.log(data);
 
-   $(this).parents('tr').detach();
- });
+//   });
+// });
+$(document).on('click', 'button.save', function () {
+  const data = {};
+  console.log($(this)[0])
+  const row = $(this).parents('tr')
+  data.pointId = row.data("pointid")
+  data.mapId = row.data("mapid")
 
- $tableID.on('click', '.table-up', function () {
+  row.find('td').each(function () {
+    const tableCell = $(this)
+    console.log(tableCell);
 
-   const $row = $(this).parents('tr');
+    const valueName = $(tableCell).find("input").attr("name")
+    const value = $(tableCell).text();
+    if (valueName) {
+      data[valueName] = value;
+    }
+  })
+  $.ajax({
+    method: "POST",
+    url: "/maps/" + data.mapId + "/edit/"+data.pointId +"/",
+    data: data
+  })
 
-   if ($row.index() === 0) {
-     return;
-   }
+});
 
-   $row.prev().before($row.get(0));
- });
+$tableID.on('click', '.table-remove', function () {
 
- $tableID.on('click', '.table-down', function () {
+  $(this).parents('tr').detach();
+});
 
-   const $row = $(this).parents('tr');
-   $row.next().after($row.get(0));
- });
+$tableID.on('click', '.table-up', function () {
 
- // A few jQuery helpers for exporting only
- jQuery.fn.pop = [].pop;
- jQuery.fn.shift = [].shift;
+  const $row = $(this).parents('tr');
 
- $BTN.on('click', () => {
+  if ($row.index() === 0) {
+    return;
+  }
 
-   const $rows = $tableID.find('tr:not(:hidden)');
-   const headers = [];
-   const data = [];
+  $row.prev().before($row.get(0));
+});
 
-   // Get the headers (add special header logic here)
-   $($rows.shift()).find('th:not(:empty)').each(function () {
+$tableID.on('click', '.table-down', function () {
 
-     headers.push($(this).text().toLowerCase());
-   });
+  const $row = $(this).parents('tr');
+  $row.next().after($row.get(0));
+});
 
-   // Turn all existing rows into a loopable array
-   $rows.each(function () {
-     const $td = $(this).find('td');
-     const h = {};
+// A few jQuery helpers for exporting only
+jQuery.fn.pop = [].pop;
+jQuery.fn.shift = [].shift;
 
-     // Use the headers from earlier to name our hash keys
-     headers.forEach((header, i) => {
+$BTN.on('click', () => {
 
-       h[header] = $td.eq(i).text();
-     });
+  const $rows = $tableID.find('tr:not(:hidden)');
+  const headers = [];
+  const data = [];
 
-     data.push(h);
-   });
+  // Get the headers (add special header logic here)
+  $($rows.shift()).find('th:not(:empty)').each(function () {
 
-   // Output the result
-   $EXPORT.text(JSON.stringify(data));
- });
+    headers.push($(this).text().toLowerCase());
+  });
+
+  // Turn all existing rows into a loopable array
+  $rows.each(function () {
+    const $td = $(this).find('td');
+    const h = {};
+
+    // Use the headers from earlier to name our hash keys
+    headers.forEach((header, i) => {
+
+      h[header] = $td.eq(i).text();
+    });
+
+    data.push(h);
+  });
+
+  // Output the result
+  $EXPORT.text(JSON.stringify(data));
+});
