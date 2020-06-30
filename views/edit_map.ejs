@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Edit Map</title>
+  <style>
+    .pt-3-half {
+      padding-top: 1.4rem;
+    }
+  </style>
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+
+  <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js"
+    integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+<body>
+  <%- include('partials/_header') %>
+  <!-- Editable table -->
+  <div class="card">
+    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Edit Map <%=maps[0].name %></h3>
+    <div class="card-body">
+      <div id="table" class="table-editable">
+        <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x"
+              aria-hidden="true"></i></a></span>
+        <table class="table table-bordered table-responsive-md table-striped text-center">
+          <thead>
+            <tr>
+              <th class="text-center">Spots Name</th>
+              <th class="text-center">Spots Description</th>
+              <th class="text-center">Spots Latitude</th>
+              <th class="text-center">Spots Longitude</th>
+              <th class="text-center">Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let map of maps) { %>
+            <tr>
+              <td class="pt-3-half" contenteditable="true"><%=map.points_name %></td>
+              <td class="pt-3-half" contenteditable="true"><%=map.points_description%></td>
+              <td class="pt-3-half" contenteditable="true"><%=map.latitude%></td>
+              <td class="pt-3-half" contenteditable="true"><%=map.longitude%></td>
+              <td>
+                <span class="table-remove"><button type="button"
+                    class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+              </td>
+            </tr>
+            <% } %>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Editable table -->
+
+
+</body>
+<script type="text/javascript" src="/scripts/editableTable.js"></script>
+
+</html>
+
+
+<!-- Scripts and Links -->

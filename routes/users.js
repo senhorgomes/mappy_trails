@@ -65,12 +65,10 @@ module.exports = (db) => {
 
   router.post("/login", (req, res) => {
     //extract info from form with req.body from the login page!
-    const name = req.body.email;
     const email = req.body.email;
     db.query(`
     SELECT name, email FROM users
-    WHERE name = $1
-    AND email = $2;`, [name, email])
+    WHERE email = $1;`, [email])
       .then((data) => {
         if (data.rowCount = 1) {
           //setting the cookie in the users browser
