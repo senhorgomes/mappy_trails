@@ -1,6 +1,6 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-custom">
-    <a class="navbar-brand" href="/">Categories</a>
+    <img src="../../images/MappyTrailsLogo.png" width="125" height="37.5" alt="">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -11,8 +11,9 @@
     <div class="d-flex justify-content-end">
       <% if(userId){ %>
         <div class="navbar-nav">
-          <a class="nav-item nav-link" id="head-maps" href="/profile/maps">My Maps</a>
-          <a class="nav-item nav-link" id="head-new" href="/maps/new">Create a New Map</a>
+          <a class="nav-item nav-link" id="head-maps" href="/">Categories</a>
+          <a class="nav-item nav-link" id="head-maps" href="/profile/maps/">My Maps</a>
+          <a class="nav-item nav-link" id="head-new" href="/maps/new/">Create a New Map</a>
         </div>
       <form class="form-inline" action="/logout" method="POST">
         <p class="h6" style="margin-bottom: 10px; margin-top:10px; margin-right: 10px">Logged in as

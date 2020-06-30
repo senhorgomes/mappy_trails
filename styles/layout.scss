@@ -15,9 +15,6 @@ body {
   padding: 2em;
 }
 
-
-
-
 .category {
   display: flex;
   justify-content: center;
@@ -104,10 +101,25 @@ body {
     text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
 }/* change the link color */
 .navbar-custom .navbar-nav .nav-link {
-    color: #45CB85;
+    color: #87b6A7;
+    text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
 }
 
 
+//For the favorite icon:
+.ico {
+  border-radius: 50%;
+  cursor: pointer;
+  fill: #232323;
+  transition: .4s;
+}
+
+.liked {
+  transform: scale(1.05) rotate(360deg);
+  background-color: #C62828;
+  padding: .1rem;
+  fill: white;
+}
 
 
 //Color Palette:

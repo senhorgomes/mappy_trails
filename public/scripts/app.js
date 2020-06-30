@@ -8,7 +8,7 @@ $(() => {
   //   }
   // });;
   let likeBtn = document.querySelector('.ico');
-  likeBtn.addEventListener('click', function() {
-       likeBtn.classList.toggle('liked');
+  likeBtn.addEventListener('click', function () {
+    likeBtn.classList.toggle('liked');
   });
 });
