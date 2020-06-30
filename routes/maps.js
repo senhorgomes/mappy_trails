@@ -215,16 +215,40 @@ module.exports = (db) => {
     const pointDescription = req.body.point_description;
     const pointLat = req.body.point_latitude;
     const pointLong = req.body.point_long;
+    // function geocodeAddress(geocoder, resultsMap) {
+    //   var address = document.getElementById('address').value;
+    //   geocoder.geocode({'address': address}, function(results, status) {
+    //     if (status === 'OK') {
+    //       const r = Maps.
+    //     } else {
+    //       alert('Geocode was not successful for the following reason: ' + status);
+    //     }
+    //   });
     if (mapName) {
       let query = `INSERT INTO maps VALUES ($1, $2, $3, $4)`;
       db.query(query, [mapName, mapDescription, mapCategory, mapOwnerId])
-
+        .then(res => {
+          console.log(res.rows);
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
     }
     if (pointName) {
       let query2 = `INSERT INTO points VALUES ($1, $2, $3, $4)`
       db.query(query2, [pointName, pointDescription, pointLat, pointLong])
+      .then(res => {
+        let resp
+        resp.geometry.location.lat
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
     }
-
   });
 
 
@@ -270,3 +294,4 @@ module.exports = (db) => {
 
   return router;
 };
+
