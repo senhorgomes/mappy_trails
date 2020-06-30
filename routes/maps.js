@@ -235,18 +235,10 @@ module.exports = (db) => {
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
   router.post("/maps/", (req, res) => {
     //add the new map associated with the user to the database
-    const mapName = req.body.map_name;
-    const mapDescription = req.body.map_description;
-    const mapCategory = req.body.map_category;
-    const mapOwnerId = getOwnerId(req.session.userId);
     const pointName = req.body.point_name;
     const pointDescription = req.body.point_description;
     const pointLat = req.body.point_latitude;
     const pointLong = req.body.point_long;
-    if (mapName) {
-      let query = `INSERT INTO maps VALUES ($1, $2, $3, $4)`;
-      db.query(query, [mapName, mapDescription, mapCategory, mapOwnerId])
-    }
     if (pointName) {
       let query2 = `INSERT INTO points (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
       db.query(query2, [pointName, pointDescription, pointLat, pointLong])
