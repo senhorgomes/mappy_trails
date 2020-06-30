@@ -2,16 +2,17 @@
 <html lang="en">
   <head>
     <title>My Map</title>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
+    
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   </head>
 
   <body>
@@ -24,8 +25,10 @@ for delete button: <method: delete, action "/maps:id">
     <div class="list_container">
       <section id="my_maps_container"></section>
       <!--In here, the user's maps will be populated. Once sample maps are here, we can apply the buttons for edit and delete-->
-      <main style="margin: 1em;">
-        <h3>Maps Created By Me</h3>
+      <main>
+        <div class="header-box">
+          <h3>My Trails</h3>
+        </div>
         <table class="table">
           <thead>
             <tr>
@@ -38,15 +41,15 @@ for delete button: <method: delete, action "/maps:id">
           <tbody>
             <% for(let map of maps) { %>
             <tr>
-              <td><a  href="/maps/<%= map.id%>"><%= map.name %></a></td>
-              <td><%= map.category.charAt(0).toUpperCase()+map.category.slice(1) %> </td>
+              <td class="my-map-item"><a href="/maps/<%= map.id%>"><%= map.name %></a></td>
+              <td class="my-map-item"><%= map.category.charAt(0).toUpperCase()+map.category.slice(1) %> </td>
               <td>
                 <form method="GET" action="/maps/<%=map.id%>/edit/">
-                  <button type="submit" class="btn btn-primary">Edit</button>
+                  <button type="submit" id="button-edit">Edit</button>
                 </form>
               <td>
                 <form method="POST" action="/maps/<%= map.id%>">
-                  <button type="submit" class="btn btn-danger">Delete</button>
+                  <button type="submit" id="button-delete">Delete</button>
                 </form>
               </td>
             </tr>
