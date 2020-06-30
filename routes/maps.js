@@ -115,28 +115,33 @@ module.exports = (db) => {
 
   //saves the map as favourite NEED DATABASE!!
   router.get("/maps/:id/favorites/", (req, res) => {
-    const id = req.params.id;
-
     const mapId = req.params.id;
     const userId = req.session.userId;
 
     if (!isLoggedIn(req.session)) {
       res.status(403).send("Please login or register first.");
     } else {
-      const promiseObj = new Promise(getOwnerId)
-      promiseObj.then(() => {
-        console.log(result);
-      })
-        .catch(() => {
-          console.log('Error')
+      const query = `SELECT id FROM users
+      WHERE email = $1;`
+      db.query(query, [userId])
+        .then(data => {
+
+          return data;
+
+        }).then((res) => {
+          let ownerId = res.rows[0].id;
+          let query = `INSERT INTO usermaps VALUES (DEFAULT, $1, $2)`;
+          return db.query(query, [ownerId, mapId]).then((res) => {
+            console.log("favourited", res);
+          })
         })
-      // console.log("clicked");
-      // let query = `INSERT INTO usermaps VALUES ($1, $2)`;
-      // db.query(query, [mapOwnerId, mapId])
+        .catch((err) => {
+          console.log('Error', err)
+        })
 
     }
   });
-  //edit the map
+  // //edit the map
   router.get("/maps/:id/edit/", (req, res) => {
     const id = req.params.id;
 
@@ -146,7 +151,7 @@ module.exports = (db) => {
     if (!isLoggedIn(req.session)) {
       res.status(403).send("Please login or register first.");
     } else {
-      let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description AS points_description, points.name AS points_name FROM maps
+      let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description AS points_description, points.name AS points_name, points.id AS point_id FROM maps
   JOIN pointsmaps ON maps.id = pointsmaps.map_id
   JOIN points ON points.id = pointsmaps.point_id
   WHERE maps.id = $1`;
@@ -155,6 +160,7 @@ module.exports = (db) => {
           let templateVars = {
             maps: data.rows,
             userId: req.session.userId
+
           }
           res.render("edit_map", templateVars);
 
@@ -170,6 +176,7 @@ module.exports = (db) => {
     }
 
   });
+
 
   //shows saved maps by the user
   router.get("/profile/maps", (req, res) => {
@@ -197,13 +204,39 @@ module.exports = (db) => {
     }
   });
 
-  //editing maps =>to be figured out
-  router.put("/maps/:id", (req, res) => {
-    const newMap = req.body.newMap
-    //intigrate new map info into database
-    res.redirect("/profile/maps");
-  });
+  // //editing maps =>to be figured out
+  // router.put("/maps/:id", (req, res) => {
+  //   const newMap = req.body.newMap
+  //   //intigrate new map info into database
+  //   res.redirect("/profile/maps");
+  // });
+  //edit the map
+  router.post("/maps/:mapId/edit/:pointId/", (req, res) => {
+    console.log(req.body);
+    const map_id = req.body.mapId;
+    const point_id = req.body.pointId;
+    const points_name = req.body.points_name;
+    const points_desc = req.body.points_description;
+    const points_lat = req.body.latitude;
+    const points_long = req.body.longitude;
 
+    const query = `SELECT id FROM users
+      WHERE email = $1;`
+    db.query(query, [req.session.userId])
+      .then(data => {
+
+        return data;
+
+      }).then((data) => {
+        let ownerId = data.rows[0].id;
+        const query = `UPDATE points SET name = $1, description = $2, latitude = $3, longitude =$4, owner_id = $5
+   WHERE id = $6;`
+        db.query(query, [points_name, points_desc, points_lat, points_long, ownerId, point_id])
+
+      }).then(data => {
+        res.redirect(`/maps/${mapId}/edit/`);
+      })
+  })
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
   router.post("/maps/", (req, res) => {
     //add the new map associated with the user to the database
@@ -218,19 +251,14 @@ module.exports = (db) => {
     if (mapName) {
       let query = `INSERT INTO maps VALUES ($1, $2, $3, $4)`;
       db.query(query, [mapName, mapDescription, mapCategory, mapOwnerId])
-
     }
     if (pointName) {
       let query2 = `INSERT INTO points VALUES ($1, $2, $3, $4)`
       db.query(query2, [pointName, pointDescription, pointLat, pointLong])
     }
-
   });
 
-
-
-
-  //deleting maps => to be figured out
+  //deleting maps
   router.post("/maps/:id/", (req, res) => {
     //delete map from data base
     id = req.params.id;
@@ -253,20 +281,44 @@ module.exports = (db) => {
             .status(500)
             .json({ error: err.message });
         });
-
     }
   });
+  //editing maps IN PROGRESS!
+  // router.post("/maps/:id/edit/", (req, res) => {
+  //   //delete map from data base
+  //   let id = req.params.id;
+  //   let info = req.body;
+  //   console.log(info);
+  // const userId = req.session.userId;
+  // if (!isLoggedIn(req.session)) {
+  //   res.status(403).send("Please login or register first.");
+  // } else {
+  //   //removing points from db
+  //   let query = `DELETE FROM points JOIN pointsmaps ON points.id = point_id
+  // JOIN maps ON map_id = maps.id
+  // WHERE map.id = $1`;
+  //   db.query(query, [id])
+  //     //looking for owner id in db
+  //     .then(data => {
+  //       const query = `SELECT id FROM users WHERE email = $1;`
+  //       db.query(query, [userId])
+  //     }).then(data => {
+  //       return data;
+  //       //insert new points into points.sql
+  //     }).then((res) => {
+  //       let ownerId = res.rows[0].id;
+  //       let query = `INSERT INTO points (id, name, description, latitude, longitude, owner_id)
+  //       VALUES (DEFAULT, $1, $2, $3, $4, $5) RETURNING *;`;
+  //       return db.query(query, [pointName, pointDesc, pointLat, pointLong, ownerId])
+  //     }).then((data) => {
+  //       let pointId = data.row.id;
+  //       let query = `INSERT INTO pointsmaps (id, point_id, map_id) VALUES (DEFAULT, $1, $2)`
+  //       db.query(query, [pointId, id])
+  //     }).then(() => {
+  //       res.redirect("my_maps");
+  //     });
 
-  function getOwnerId(resolve, reject) {
-    const query = `SELECT id FROM users
-  WHERE email = $1;`
-    db.query(query, [req.session.userId])
-      .then(data => {
-        return data;
-
-      })
-
-  }
-
+  //   }
+  // })
   return router;
 };
