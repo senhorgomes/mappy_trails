@@ -20,26 +20,26 @@
   <!--New MAP Area-->
       <form id="new_map" action="/maps" method="post">
         <div class="form_group">
-          <input name="map_name" type="text" class="form-control" placeholder="E.g., 'Coolest Cafes', 'Best Downtown Bars'">
+          <input id="map_name" name="map_name" type="text" class="form-control" placeholder="E.g., 'Coolest Cafes', 'Best Downtown Bars'">
           <small class="form-text text-muted">Feel free to get creative, but remember that others will see this title, too, unless you make it private.</small>
           <label for="map_category">Select list (select one):</label>
-          <select class="form-control" id="maps-list">
-            <option>Cafes</option>
-            <option>Foods</option>
-            <option>Bars</option>
-            <option>Arts</option>
+          <select name="map_category" class="form-control" id="maps-list">
+            <option value ="cafes">Cafes</option>
+            <option value ="restaurants">Foods</option>
+            <option value ="bars">Bars</option>
+            <option value ="arts">Arts</option>
           </select>
           <label for="map_description">We're listening--tell us some more:</label>
           <textarea name="map_description" class="form-control" rows="3" id="comment"></textarea>
-          
+
         </div>
         <button class="buttons" type="submit">Add Some Destinations</button>
       </form>
   <!--New POINTS area-->
-        <form id="new_point" action="/maps" method="post"> 
+        <form id="new_point" action="/maps" method="post">
           <input name="point_name" type="text" class="form-control" placeholder="E.g., 'Moon Bean Cafe', 'Sneaky Dee's'">
           <small class="form-text text-muted">Feel free to get creative, but remember that others will see this title, too, unless you make it private.</small>
-          
+
           <label for="point_description">Sounds like a great spot. Anything else to add?</label>
           <textarea name="point_description" class="form-control" rows="3" id="comment"></textarea>
 

@@ -207,14 +207,15 @@ module.exports = (db) => {
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
   router.post("/maps/", (req, res) => {
     //add the new map associated with the user to the database
+    const mapId = 100004444;
     const mapName = req.body.map_name;
     const mapDescription = req.body.map_description;
     const mapCategory = req.body.map_category;
-    const mapOwnerId = getOwnerId(req.session.userId);
-    const pointName = req.body.point_name;
-    const pointDescription = req.body.point_description;
-    const pointLat = req.body.point_latitude;
-    const pointLong = req.body.point_long;
+    const mapOwnerId = 1;//getOwnerId(req.session.userId);
+    //const pointName = req.body.point_name;
+    //const pointDescription = req.body.point_description;
+    //const pointLat = req.body.point_latitude;
+    //const pointLong = req.body.point_long;
     // function geocodeAddress(geocoder, resultsMap) {
     //   var address = document.getElementById('address').value;
     //   geocoder.geocode({'address': address}, function(results, status) {
@@ -224,32 +225,35 @@ module.exports = (db) => {
     //       alert('Geocode was not successful for the following reason: ' + status);
     //     }
     //   });
+    console.log(req.body);
     if (mapName) {
-      let query = `INSERT INTO maps VALUES ($1, $2, $3, $4)`;
-      db.query(query, [mapName, mapDescription, mapCategory, mapOwnerId])
+      let query = `INSERT INTO maps VALUES ($1, $2, $3, $4, $5)`;
+      db.query(query, [mapId, mapName, mapDescription, mapCategory, mapOwnerId])
         .then(res => {
-          console.log(res.rows);
+          console.log(res);
+          return res;
         })
         .catch(err => {
           res
             .status(500)
             .json({ error: err.message });
+            console.log(err);
         });
     }
-    if (pointName) {
-      let query2 = `INSERT INTO points VALUES ($1, $2, $3, $4)`
-      db.query(query2, [pointName, pointDescription, pointLat, pointLong])
-      .then(res => {
-        let resp
-        resp.geometry.location.lat
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-    }
-  });
+  //   if (pointName) {
+  //     let query2 = `INSERT INTO points VALUES ($1, $2, $3, $4)`
+  //     db.query(query2, [pointName, pointDescription, pointLat, pointLong])
+  //     .then(res => {
+  //       let resp
+  //       resp.geometry.location.lat
+  //     })
+  //     .catch(err => {
+  //       res
+  //         .status(500)
+  //         .json({ error: err.message });
+  //     });
+  //   }
+    });
 
 
 
