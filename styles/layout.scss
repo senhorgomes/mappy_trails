@@ -106,6 +106,20 @@ body {
 }
 
 
+//For the favorite icon:
+.ico {
+  border-radius: 50%;
+  cursor: pointer;
+  fill: #232323;
+  transition: .4s;
+}
+
+.liked {
+  transform: scale(1.05) rotate(360deg);
+  background-color: #C62828;
+  padding: .1rem;
+  fill: white;
+}
 
 
 //Color Palette:
