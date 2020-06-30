@@ -22,6 +22,10 @@ body {
   height: 19em;
 }
 
+a {
+  text-decoration: none!important;
+}
+
 .category {
   display: flex;
   justify-content: center;
@@ -34,6 +38,12 @@ body {
   box-shadow: 5px 10px #595959;
   background-size: contain;
 }
+.category:hover {
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  transition-duration: 0.5s;
+  transition-property: transform;
+}
 .category p {
   font-weight: bold;
   font-size: 2.5em;
@@ -41,6 +51,8 @@ body {
                 0px 8px 13px rgba(0,0,0,0.1),
                 0px 18px 23px rgba(0,0,0,0.1);
 }
+
+
 .container {
   display: flex;
   justify-content: center;
@@ -97,8 +109,6 @@ body {
 // }
 
 
-
-
 // For the nav-bar elements
 .navbar-custom {
   display: flex;
@@ -107,12 +117,23 @@ body {
 }/* change the brand and text color */
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
-    color: #87b6A7;
-    text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
+  color: #87b6A7;
+  text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
 }/* change the link color */
 .navbar-custom .navbar-nav .nav-link {
-    color: #87b6A7;
-    text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
+  color: #87b6A7;
+  text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
+}
+#head-categories {
+  color: #87b6A7;
+  text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
+}
+
+.navbar-custom .navbar-nav .nav-link:hover {
+  text-shadow: 2px 2px 3px #87b6A7, 3px 3px 5px #E3F09B;
+}
+#head-categories:hover {
+  text-shadow: 2px 2px 3px #87b6A7, 3px 3px 5px #E3F09B;
 }
 
 
