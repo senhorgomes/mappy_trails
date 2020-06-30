@@ -168,15 +168,15 @@ module.exports = (db) => {
     const pointDescription = req.body.point_description;
     const pointLat = req.body.point_latitude;
     const pointLong = req.body.point_long;
-    function geocodeAddress(geocoder, resultsMap) {
-      var address = document.getElementById('address').value;
-      geocoder.geocode({'address': address}, function(results, status) {
-        if (status === 'OK') {
-          const r = Maps.
-        } else {
-          alert('Geocode was not successful for the following reason: ' + status);
-        }
-      });
+    // function geocodeAddress(geocoder, resultsMap) {
+    //   var address = document.getElementById('address').value;
+    //   geocoder.geocode({'address': address}, function(results, status) {
+    //     if (status === 'OK') {
+    //       const r = Maps.
+    //     } else {
+    //       alert('Geocode was not successful for the following reason: ' + status);
+    //     }
+    //   });
     if (mapName) {
       let query = `
   // INSERT INTO maps VALUES ($1, $2, $3, $4)
@@ -250,9 +250,4 @@ module.exports = (db) => {
 
   return router;
 };
-$(document).ready(function() {
-  $.ajax("/maps/", { method: 'POST', data: $('form')
-  .serialize() })
-  .then(() => {$('new_point.children').empty()
-  });
-});
+
