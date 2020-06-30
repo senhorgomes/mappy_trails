@@ -27,16 +27,27 @@ a {
 }
 
 h1 {
+  padding-top: 0.25em;
+  font-family: 'Shadows Into Light', cursive;
+  color: #5B5941;
+  text-shadow: 2px 3px 0px #FCD0A1;
+  text-align: center;
+  font-weight: 600;
+}
+
+h2, h3, h4, h5, h6 {
+  font-family: 'Shadows Into Light', cursive;
   color: #5B5941;
   text-shadow: 2px 3px 0px #FCD0A1;
   text-align: center;
 }
 
-h2, h3, h4, h5, h6 {
-  color: #5B5941;
-  text-shadow: 2px 3px 0px #FCD0A1;
-  text-align: center;
+#header-box {
+  background-color: rgba(231,216,201, .4);
+  padding-bottom: 0.25em;
 }
+
+
 
 .category {
   display: flex;
@@ -105,19 +116,15 @@ a {
   margin: 20px;
 }
 
-//Attempting to change the body styles, but this is being overridden???REBOOT FILE???
-// body {
-//   background-color: #595959;
-//   border-radius: 5em;
-//   border-color: red;
-//   background-position: left top;
-// }
-
-
 //For the buttons:
-// .buttons {
-
-// }
+.buttons {
+  color: #fff;
+  background-color: #004E64;
+  border-color: #004E64;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  border-radius: 0;
+}
 
 
 // For the nav-bar elements
@@ -175,3 +182,4 @@ a {
 // color: #7F7F7F Lighter gray
 // color: #57E2E5 Turquoise
 // color: #45CB85 Emerald
+// color: #e7d8c9 Dusty beige

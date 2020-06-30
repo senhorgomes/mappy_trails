@@ -42,11 +42,11 @@ for delete button: <method: delete, action "/maps:id">
               <td><%= map.category.charAt(0).toUpperCase()+map.category.slice(1) %> </td>
               <td>
                 <form method="GET" action="/maps/<%=map.id%>/edit/">
-                  <button type="submit" class="btn btn-outline-primary">Edit</button>
+                  <button type="submit" class="btn btn-primary">Edit</button>
                 </form>
               <td>
                 <form method="POST" action="/maps/<%= map.id%>">
-                  <button type="submit" class="btn btn-outline-danger">Delete</button>
+                  <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
               </td>
             </tr>
@@ -75,18 +75,6 @@ for delete button: <method: delete, action "/maps:id">
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
       </section>
-<!--CUT STUFF FROM TWEETER, USEFUL FOR DELETION:
-<div class="my_map_functions">
-  <button id="button" type="submit">Express</button>
-  <output name="counter" class="counter" for="tweet-text">140</output>
-</div>-->
-
-
-
-
-
-
-
 
   </body>
 </html>
