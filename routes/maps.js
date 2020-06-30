@@ -212,9 +212,9 @@ module.exports = (db) => {
     if (pointName) {
       let query2 = `INSERT INTO points (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
       db.query(query2, [pointName, pointDescription, pointLat, pointLong])
-      .then(res => {
-        let resp
-        resp.geometry.location.lat
+      .then(result => {
+        console.log(result.rows);
+        return res.json(result.rows[0]);
       })
       .catch(err => {
         res
@@ -280,7 +280,7 @@ module.exports = (db) => {
 
   function getOwnerId(resolve, reject) {
     const query = `SELECT id FROM users
-  WHERE email = $1;`
+    WHERE email = $1;`
     db.query(query, [req.session.userId])
       .then(data => {
         return data;
