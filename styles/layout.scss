@@ -23,7 +23,7 @@ body {
 }
 
 a {
-  text-decoration: none!important;
+  color: inherit;
 }
 
 h1 {
@@ -76,6 +76,7 @@ h2, h3, h4, h5, h6 {
   transition-property: transform;
 }
 .category p {
+  text-decoration: none;
   font-weight: bold;
   font-size: 2.5em;
   text-shadow:  0px 4px 3px rgba(0,0,0,0.4),
@@ -88,10 +89,12 @@ h2, h3, h4, h5, h6 {
   justify-content: center;
   align-items: center;
 }
+
 a {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  text-decoration: none !important;
 }
 .firstRow {
   display: flex;
@@ -166,12 +169,12 @@ a {
   display: flex;
   justify-content: space-between;
   background-color: #FCD0A1;
-}/* change the brand and text color */
+}
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
   color: #87b6A7;
   text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
-}/* change the link color */
+}
 .navbar-custom .navbar-nav .nav-link {
   color: #87b6A7;
   text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
@@ -206,16 +209,34 @@ a {
 
 //For my_maps page tables:
 td {
+  text-decoration: none!important;
   background-color: rgba(231,216,201, .4);
-  padding-bottom: 0.25em;
 }
 
 th {
   background-color: rgba(127,127,127, .4);
-  padding-bottom: 0.25em;
+
+}
+
+.my-map-item {
+  font-family: 'Shadows Into Light', cursive;
+  color: #5B5941;
+  text-shadow: 1px 2px 0px #FCD0A1;
+  text-align: center;
+}
+
+//For map display page:
+#map-title {
+
+  font-family: 'Rye', cursive;
+  // background-color: rgba(231,216,201, .4);
 }
 
 
+
+.map-container {
+  border: 0.3em outset #FCD0A1; 
+}
 
 
 //Color Palette:
