@@ -267,6 +267,7 @@ module.exports = (db) => {
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
   router.post("/maps/:mapId/points", (req, res) => {
     //add the new map associated with the user to the database
+    const mapID = req.params.mapId;
     const pointName = req.body.point_name;
     const pointDescription = req.body.point_description;
     const pointLat = req.body.point_latitude;
@@ -286,7 +287,7 @@ module.exports = (db) => {
     }
   });
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
-  router.post("/maps/", (req, res) => {
+  router.post("/maps", (req, res) => {
     //add the new map associated with the user to the database
     //const mapId = 100004444;
     const mapName = req.body.map_name;
