@@ -3,11 +3,7 @@
 
 <head>
   <title>Edit Map</title>
-  <style>
-    .pt-3-half {
-      padding-top: 1.4rem;
-    }
-  </style>
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -28,15 +24,13 @@
     <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Edit Map: <%=maps[0].name %></h3>
     <div class="card-body">
       <div id="table" class="table-editable">
-        <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x"
-              aria-hidden="true"></i></a></span>
         <table class="table table-bordered table-responsive-md table-striped text-center">
           <thead>
             <tr>
               <th class="text-center">Spot's Name</th>
-              <th class="text-center">Spot's Description</th>
-              <th class="text-center">Spot's Latitude</th>
-              <th class="text-center">Spot's Longitude</th>
+              <th class="text-center">Description</th>
+              <th class="text-center">Latitude</th>
+              <th class="text-center">Longitude</th>
               <th class="text-center">Image URL</th>
               <th class="text-center">Save</th>
               <th class="text-center">Remove</th>
@@ -44,31 +38,35 @@
           </thead>
           <tbody>
             <% for(let map of maps) { %>
-            <tr data-pointid = "<%=map.point_id%>" data-mapid="<%=map.map_id%>">
-
-              <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_name"><%=map.points_name %></td>
-              <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_description"><%=map.points_description%></td>
-              <td class="pt-3-half" contenteditable="true"><input type=hidden name="latitude"><%=map.latitude%></td>
-              <td class="pt-3-half" contenteditable="true"><input type=hidden name="longitude"><%=map.longitude%></td>
-              <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_img"><%=map.points_img%></td>
-
-              <td>
-                <span id="button-save" class="table-save" ><button type="submit"
+              <tr data-pointid = "<%=map.point_id%>" data-mapid="<%=map.map_id%>">
+                
+                <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_name"><%=map.points_name %></td>
+                <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_description"><%=map.points_description%></td>
+                <td class="pt-3-half" contenteditable="true"><input type=hidden name="latitude"><%=map.latitude%></td>
+                <td class="pt-3-half" contenteditable="true"><input type=hidden name="longitude"><%=map.longitude%></td>
+                <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_img"><%=map.points_img%></td>
+                
+                <td>
+                  <span id="button-save" class="table-save" ><button type="submit"
                     class="btn btn-outline-primary btn-sm my-0 save">Save</button></span>
-              </td>
-              <td>
-                <span id="button-delete" class="table-remove"><button type="button"
-                    class="btn btn-danger btn-rounded btn-sm my-0 remove">Remove</button></span>
-              </td>
-
-            </tr>
-            <% } %>
-
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+                  </td>
+                  <td>
+                    <span id="button-delete" class="table-remove"><button type="button"
+                      class="btn btn-danger btn-rounded btn-sm my-0 remove">Remove</button></span>
+                    </td>
+                    
+                  </tr>
+                  <% } %>
+                  
+                </tbody>
+              </table>
+              <h4 id="edit-add-line">Need one more?</h4>
+              <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x"
+                    aria-hidden="true"></i></a>
+              </span>
+            </div>
+          </div>
+        </div>
   <!-- Editable table -->
 
 

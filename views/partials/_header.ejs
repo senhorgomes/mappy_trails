@@ -10,12 +10,13 @@
           <a class="nav-item nav-link" id="head-maps" href="/profile/maps/">My Maps</a>
           <a class="nav-item nav-link" id="head-new" href="/maps/new/">Create a New Map</a>
           <form class="form-inline" action="/logout" method="POST">
-            <a id="logged-user" href="#">Welcome, <%= userId %>!</a>
             <button class="button-head" type="submit">Logout</button></form>
+            <a id="logged-user" href="#">Welcome, <%= userId %>!</a>
+          
             <% } else{ %>
               <!-- No logged in user: display login button -->
               <form class="form-inline" action="/login" method="GET">
-                <button type="submit" class="button-head" style="margin-right: 10px">Login/Register</button>
+                <button style="float: right;" type="submit" class="button-head" style="margin-right: 10px">Login/Register</button>
               </form>
             <% } %>
         </div>
