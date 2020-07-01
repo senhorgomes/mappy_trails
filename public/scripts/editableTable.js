@@ -4,10 +4,14 @@ const $EXPORT = $('#export');
 
 const newTr = `
  <tr>
- <td class="pt-3-half" contenteditable="true"></td>
- <td class="pt-3-half" contenteditable="true"></td>
- <td class="pt-3-half" contenteditable="true"></td>
- <td class="pt-3-half" contenteditable="true"></td>
+ <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_name"></td>
+ <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_description"></td>
+ <td class="pt-3-half" contenteditable="true"><input type=hidden name="latitude"></td>
+ <td class="pt-3-half" contenteditable="true"><input type=hidden name="longitude"></td>
+ <td>
+    <span class="table-add-button" ><button type="submit"
+      class="btn btn-outline-primary btn-sm my-0 add">Add</button></span>
+  </td>
  <td>
    <span class="table-remove"><button type="button"
        class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
@@ -18,23 +22,9 @@ $('.table-add').click(() => {
 
   $('tbody').append(newTr);
 });
-// $(document).ready(() => {
-//   $('.save').click((evt) => {
-//     const data = {};
-//     console.log(this, evt.target)
-//     $(this).parents('tr').find('td').each(() => {
-//       const tableCell = $(this)
-//       console.log(tableCell);
-
-//       const valueName = $(tableCell).find("input").attr("name")
-//       const value = $(tableCell).text()
-//       data[valueName] = value;
-//     })
-//     console.log(data);
-
-//   });
-// });
+//edits an existing point
 $(document).on('click', 'button.save', function () {
+  window.alert("Refresh the page to see changes");
   const data = {};
   console.log($(this)[0])
   const row = $(this).parents('tr')
@@ -53,7 +43,32 @@ $(document).on('click', 'button.save', function () {
   })
   $.ajax({
     method: "POST",
-    url: "/maps/" + data.mapId + "/edit/"+data.pointId +"/",
+    url: "/maps/" + data.mapId + "/add/"+data.pointId +"/",
+    data: data
+  })
+
+});
+
+//adds a new point to map
+$(document).on('click', 'button.add', function () {
+  window.alert("Refresh the page to see changes");
+  const data = {};
+  console.log($(this)[0])
+  const row = $(this).parents('tr')
+
+  row.find('td').each(function () {
+    const tableCell = $(this)
+    console.log(tableCell);
+
+    const valueName = $(tableCell).find("input").attr("name")
+    const value = $(tableCell).text();
+    if (valueName) {
+      data[valueName] = value;
+    }
+  })
+  $.ajax({
+    method: "POST",
+    url: "/maps/" + window.location.href.split('/').filter(e=>e!=="")[3] + "/add/point",
     data: data
   })
 

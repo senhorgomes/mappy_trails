@@ -230,6 +230,39 @@ module.exports = (db) => {
       })
   })
 
+  //post request to add points to the map database
+  router.post("/maps/:mapId/add/point/", (req, res) => {
+    console.log(req.body);
+    const map_id = req.params.mapId;
+    const points_name = req.body.points_name;
+    const points_desc = req.body.points_description;
+    const points_lat = req.body.latitude;
+    const points_long = req.body.longitude;
+
+    const query = `SELECT id FROM users
+      WHERE email = $1;`
+    db.query(query, [req.session.userId])
+      .then(data => {
+
+        return data;
+
+      }).then((data) => {
+        let ownerId = data.rows[0].id;
+        const query = `INSERT INTO points (id, name, description, latitude, longitude , owner_id)
+        VALUES(DEFAULT, $1, $2, $3, $4, $5) RETURNING *;`
+        return db.query(query, [points_name, points_desc, Number(points_lat), Number(points_long), ownerId])
+
+      }).then(data2 => {
+        const point_id = data2.rows[0].id;
+        console.log("point id", point_id);
+        const query = `INSERT INTO pointsmaps (id, point_id, map_id)
+        VALUES(DEFAULT, $1, $2);`
+        db.query(query, [point_id, map_id])
+
+      }).then(data => {
+        res.redirect(`/maps/${map_id}/edit/`);
+      })
+  })
 
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
   router.post("/maps/:mapId/points", (req, res) => {
@@ -298,7 +331,6 @@ module.exports = (db) => {
             .json({ error: err.message });
         });
     }
-
   })
 
 
