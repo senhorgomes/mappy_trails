@@ -5,7 +5,6 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 const { getUserByEmail, authenticateUser, mapsForUser, isLoggedIn } = require("./helpers.js");
-
 const express = require('express');
 const router = express.Router();
 const generateHelpers = require('./helpers');
@@ -46,7 +45,6 @@ module.exports = (db) => {
           .status(500)
           .json({ error: err.message });
       });
-
   });
 
   //renders a form for creating a new map upon clicking "create new map"
@@ -55,11 +53,9 @@ module.exports = (db) => {
     if (!isLoggedIn(req.session)) {
       res.status(403).send("Please login or register first.");
     } else {
-
       let templateVars = {
         userId: req.session.userId
       }
-
       res.render("new_map", templateVars);
     }
   });
@@ -67,7 +63,6 @@ module.exports = (db) => {
   //displays the chosen map
   router.get("/maps/:id/", (req, res) => {
     console.log(req.session.userId);
-
     const mapId = req.params.id;
     console.log(mapId);
     let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS id, points.latitude, points.longitude, points.description, points.name AS points_name FROM maps
@@ -113,11 +108,10 @@ module.exports = (db) => {
       });
   });
 
-  //saves the map as favourite NEED DATABASE!!
+  //saves the map as favourite
   router.get("/maps/:id/favorites/", (req, res) => {
     const mapId = req.params.id;
     const userId = req.session.userId;
-
     if (!isLoggedIn(req.session)) {
       res.status(403).send("Please login or register first.");
     } else {
@@ -125,9 +119,7 @@ module.exports = (db) => {
       WHERE email = $1;`
       db.query(query, [userId])
         .then(data => {
-
           return data;
-
         }).then((res) => {
           let ownerId = res.rows[0].id;
           let query = `INSERT INTO usermaps VALUES (DEFAULT, $1, $2)`;
@@ -138,10 +130,9 @@ module.exports = (db) => {
         .catch((err) => {
           console.log('Error', err)
         })
-
     }
   });
-  // //edit the map
+  //edit the map page
   router.get("/maps/:id/edit/", (req, res) => {
     const id = req.params.id;
 
@@ -152,9 +143,9 @@ module.exports = (db) => {
       res.status(403).send("Please login or register first.");
     } else {
       let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description AS points_description, points.name AS points_name, points.id AS point_id FROM maps
-  JOIN pointsmaps ON maps.id = pointsmaps.map_id
-  JOIN points ON points.id = pointsmaps.point_id
-  WHERE maps.id = $1`;
+    JOIN pointsmaps ON maps.id = pointsmaps.map_id
+    JOIN points ON points.id = pointsmaps.point_id
+    WHERE maps.id = $1`;
       db.query(query, [id])
         .then(data => {
           let templateVars = {
@@ -170,11 +161,7 @@ module.exports = (db) => {
             .status(500)
             .json({ error: err.message });
         });
-
-
-
     }
-
   });
 
   //shows saved maps by the user
@@ -215,7 +202,7 @@ module.exports = (db) => {
     }
   });
 
-  //edit the map COMPLETE
+  //post request to edit the map in the database
   router.post("/maps/:mapId/edit/:pointId/", (req, res) => {
     console.log(req.body);
     const map_id = req.body.mapId;
@@ -254,15 +241,15 @@ module.exports = (db) => {
     if (pointName) {
       let query2 = `INSERT INTO points (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
       db.query(query2, [pointName, pointDescription, pointLat, pointLong])
-      .then(result => {
-        console.log(result.rows);
-        return res.json(result.rows[0]);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+        .then(result => {
+          console.log(result.rows);
+          return res.json(result.rows[0]);
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
     }
   });
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
@@ -315,7 +302,7 @@ module.exports = (db) => {
   })
 
 
-  //deleting maps
+  //deleting favourited maps
   router.post("/maps/:favemapid/favorites/", (req, res) => {
     //delete map from data base
     id = req.params.favemapid;
