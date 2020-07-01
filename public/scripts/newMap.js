@@ -21,22 +21,33 @@ $(() => {
   //Submit point address for geocoding
   $('#new_point_address').on('submit', (evt) => {
     evt.preventDefault();
-    console.log("ready");
-    $.ajax(`/maps/${newMapOutput.id}/points`, {
-      method: 'POST', data: $('form')
-        .serialize()
-    })
-      .then((res) => {
-        function geocodeAddress(geocoder, resultsMap) {
+    console.log("ready", newMapOutput);
+    // $.ajax(`/maps/${newMapOutput.id}/points`, {
+    //   method: 'GET', data: $('form')
+    //     .serialize()
+    // })
+    //   .then((res) => {
           var address = $('#new_point_address').value;
           geocoder.geocode(
             {
               address: address
-            });
-        console.log(res);
-        $('#new_point').slideDown('slow');
-        $('#new_point_address button').hide();
-      });
+            },
+            function(results, status) {
+              console.log('status', status);
+              if (status == 'OK') {
+                console.log(results[0].geometry.location)
+                $('#point_lat').val(results[0].geometry.location[0])
+                $('#point_long').val(results[0].geometry.location[1])
+            } else {
+              alert('The address you typed in is incorrect, please try again ' + status);
+            }
+            $('#new_point').slideDown('slow');
+            $('#new_point_address button').hide();
+          });
+        //console.log(res);
+        // $('#new_point').slideDown('slow');
+        // $('#new_point_address button').hide();
+      //}).catch(err => {console.log(err)});
   })
   //Final submission to point
   $('#new_point').on('submit', (evt) => {
