@@ -269,26 +269,37 @@ console.log(points_img);
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
   router.post("/maps/:mapId/points", (req, res) => {
     //add the new map associated with the user to the database
+    const mapID = req.params.mapId;
     const pointName = req.body.point_name;
     const pointDescription = req.body.point_description;
     const pointLat = req.body.point_latitude;
     const pointLong = req.body.point_long;
+    const poingImg = req.body.point_img;
     if (pointName) {
-      let query2 = `INSERT INTO points (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
-      db.query(query2, [pointName, pointDescription, pointLat, pointLong])
+      let query = `INSERT INTO points (name, description, img, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
+      db.query(query, [pointName, pointDescription, pointLat, pointLong, pointImg])
         .then(result => {
           console.log(result.rows);
           return res.json(result.rows[0]);
         })
+        .then(result2 => {
+        const pointID = result2.rows[0].id;
+        console.log("point id", pointID);
+        const query = `INSERT INTO pointsmaps (id, point_id, map_id)
+        VALUES(DEFAULT, $1, $2);`
+        db.query(query, [pointID, mapID])
+
+      })
         .catch(err => {
           res
             .status(500)
             .json({ error: err.message });
+            console.log(err);
         });
     }
   });
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
-  router.post("/maps/", (req, res) => {
+  router.post("/maps", (req, res) => {
     //add the new map associated with the user to the database
     //const mapId = 100004444;
     const mapName = req.body.map_name;
@@ -307,7 +318,7 @@ console.log(points_img);
           res
             .status(500)
             .json({ error: err.message });
-          console.log(err);
+            console.log(err);
         });
     }
   });
