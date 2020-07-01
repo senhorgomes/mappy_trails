@@ -230,8 +230,8 @@ module.exports = (db) => {
       })
   })
 
-   //post request to add points to the map database
-   router.post("/maps/:mapId/add/point/", (req, res) => {
+  //post request to add points to the map database
+  router.post("/maps/:mapId/add/point/", (req, res) => {
     console.log(req.body);
     const map_id = req.params.mapId;
     const points_name = req.body.points_name;
@@ -253,14 +253,13 @@ module.exports = (db) => {
         return db.query(query, [points_name, points_desc, Number(points_lat), Number(points_long), ownerId])
 
       }).then(data2 => {
-        console.log(data2.rows[0].id);
         const point_id = data2.rows[0].id;
         console.log("point id", point_id);
         const query = `INSERT INTO pointsmaps (id, point_id, map_id)
         VALUES(DEFAULT, $1, $2);`
         db.query(query, [point_id, map_id])
 
-      }).then(data =>{
+      }).then(data => {
         res.redirect(`/maps/${map_id}/edit/`);
       })
   })
