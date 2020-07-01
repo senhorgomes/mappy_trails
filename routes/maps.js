@@ -131,7 +131,7 @@ module.exports = (db) => {
         }).then((res) => {
           let ownerId = res.rows[0].id;
           let query = `INSERT INTO usermaps VALUES (DEFAULT, $1, $2)`;
-          return db.query(query, [ownerId, mapId]).then((res) => {
+          db.query(query, [ownerId, mapId]).then((res) => {
             console.log("favourited", res);
           })
         })
@@ -187,19 +187,31 @@ module.exports = (db) => {
     WHERE users.email = $1`;
       db.query(query, [userId])
         .then(data => {
-          let templateVars = {
-            maps: data.rows,
-            userId: req.session.userId
-          }
-          //pass the category chosen to the view file
-          res.render("my_maps", templateVars)
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+          return data;
 
+        }).then((data) => {
+          let myMaps = data.rows;
+          let query = `SELECT maps.id, maps.name, maps.category FROM usermaps JOIN users ON usermaps.user_id = users.id
+          JOIN maps ON usermaps.map_id = maps.id
+          WHERE users.email = $1`;
+          db.query(query, [userId])
+            .then(data2 => {
+              let faveMaps = data2.rows;
+              let templateVars = {
+                maps: myMaps,
+                faveMaps: faveMaps,
+                userId: req.session.userId
+              }
+              //pass the category chosen to the view file
+              res.render("my_maps", templateVars)
+            })
+            .catch(err => {
+              res
+                .status(500)
+                .json({ error: err.message });
+            });
+
+        })
     }
   });
 
@@ -250,15 +262,15 @@ module.exports = (db) => {
     if (pointName) {
       let query2 = `INSERT INTO points VALUES ($1, $2, $3, $4)`
       db.query(query2, [pointName, pointDescription, pointLat, pointLong])
-      .then(res => {
-        let resp
-        resp.geometry.location.lat
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+        .then(res => {
+          let resp
+          resp.geometry.location.lat
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
     }
   });
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
@@ -281,10 +293,10 @@ module.exports = (db) => {
           res
             .status(500)
             .json({ error: err.message });
-            console.log(err);
+          console.log(err);
         });
-      }
-    });
+    }
+  });
 
   //deleting maps
   router.post("/maps/:id/", (req, res) => {
@@ -298,17 +310,40 @@ module.exports = (db) => {
       WHERE id = $1`;
       db.query(query, [id])
         .then(data => {
-          let templateVars = {
-            maps: data.rows,
-            userId: req.session.userId
-          }
-          res.render("my_maps", templateVars)
+
+          res.redirect("/profile/maps")
         })
         .catch(err => {
           res
             .status(500)
             .json({ error: err.message });
         });
+    }
+
+  })
+
+
+  //deleting maps
+  router.post("/maps/:favemapid/favorites/", (req, res) => {
+    //delete map from data base
+    id = req.params.favemapid;
+    const userId = req.session.userId;
+    if (!isLoggedIn(req.session)) {
+      res.status(403).send("Please login or register first.");
+    } else {
+      let query = `DELETE FROM usermaps
+      WHERE map_id = $1`;
+      db.query(query, [id])
+        .then(data => {
+
+          res.redirect("/profile/maps")
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+
     }
   });
 
