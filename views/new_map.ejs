@@ -11,6 +11,7 @@
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgNY0jokZRJtIF_RJyCC0J7VYsqiCX18"></script>
     <script type="text/javascript" src="/scripts/newMap.js"></script>
 
   </head>
@@ -38,15 +39,22 @@
         <button class="buttons" type="submit">Add Some Destinations</button>
       </form>
   <!--New POINTS area-->
-        <form id="new_point" action="/maps/:mapId/points" method="post">
-          <input name="point_name" type="text" class="form-control" placeholder="E.g., 'Moon Bean Cafe', 'Sneaky Dee's'">
-          <small class="form-text text-muted">Feel free to get creative, but remember that others will see this title, too, unless you make it private.</small>
-
-          <label for="point_description">Sounds like a great spot. Anything else to add?</label>
-          <textarea name="point_description" class="form-control" rows="3" id="comment"></textarea>
-          <label for="point_img">How about a picture of the locaiton?</label>
-          <input name="point_img" type="text" class="form-control" placeholder="E.g., 'http://www.imagelink.com'">
-          <button class="buttons" type="submit">Mark the Spot</button>
-        </form>
+      <form id="new_point_address" action="/maps/:mapId/points/" method="post">
+        <label for="point_description">Let's add a point to this map, first, let's start with the address.</label>
+        <input name="point_address" type="text" class="form-control" placeholder="E.g., '123 Avenue Road', '1245 Dupont St.'">
+        <button class="buttons" type="submit">Mark the Spot</button>
+      </form>
+  <!--New POINTS submitted area-->
+      <form id="new_point" action="/maps/:mapId/points/submit" method="post">
+        <input name="point_name" type="text" class="form-control" placeholder="E.g., 'Moon Bean Cafe', 'Sneaky Dee's'">
+        <small class="form-text text-muted">Feel free to get creative, but remember that others will see this title, too, unless you make it private.</small>
+        <label for="point_description">Sounds like a great spot. Anything else to add?</label>
+        <textarea name="point_description" class="form-control" rows="3" id="comment"></textarea>
+        <label for="point_img">How about a picture of the locaiton?</label>
+        <input name="point_img" type="text" class="form-control" placeholder="E.g., 'http://www.imagelink.com'">
+        <input type="hidden" id="point_lat" name="point_lat">
+        <input type="hidden" id="point_long" name="point_long">
+        <button class="buttons" type="submit">Mark the Spot</button>
+      </form>
   </body>
 </html>
