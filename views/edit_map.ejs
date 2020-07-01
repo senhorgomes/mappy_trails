@@ -15,7 +15,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
-  
+
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
 
   <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
@@ -37,6 +37,7 @@
               <th class="text-center">Spots Description</th>
               <th class="text-center">Spots Latitude</th>
               <th class="text-center">Spots Longitude</th>
+              <th class="text-center">Image URL</th>
               <th class="text-center">Save</th>
               <th class="text-center">Remove</th>
             </tr>
@@ -49,6 +50,8 @@
               <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_description"><%=map.points_description%></td>
               <td class="pt-3-half" contenteditable="true"><input type=hidden name="latitude"><%=map.latitude%></td>
               <td class="pt-3-half" contenteditable="true"><input type=hidden name="longitude"><%=map.longitude%></td>
+              <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_img"><%=map.points_img%></td>
+
               <td>
                 <span class="table-save" ><button type="submit"
                     class="btn btn-outline-primary btn-sm my-0 save">Save</button></span>

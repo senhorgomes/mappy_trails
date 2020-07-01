@@ -14,7 +14,8 @@ $(() => {
       for (marker of (data.maps)) {
         let infowindow = new google.maps.InfoWindow({
           content: `<h5 >${marker.points_name}</h5>
-          <p>${marker.description}</p>`
+          <p>${marker.description}</p>
+          <a href=${marker.points_img} >Click here to view image</a>`
         })
         let googleMarker = new google.maps.Marker({
           position: { lat: Number(marker.latitude), lng: Number(marker.longitude) },

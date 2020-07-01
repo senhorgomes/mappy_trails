@@ -8,6 +8,8 @@ const newTr = `
  <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_description"></td>
  <td class="pt-3-half" contenteditable="true"><input type=hidden name="latitude"></td>
  <td class="pt-3-half" contenteditable="true"><input type=hidden name="longitude"></td>
+ <td class="pt-3-half" contenteditable="true"><input type=hidden name="points_img"></td>
+
  <td>
     <span class="table-add-button" ><button type="submit"
       class="btn btn-outline-primary btn-sm my-0 add">Add</button></span>
@@ -43,7 +45,7 @@ $(document).on('click', 'button.save', function () {
   })
   $.ajax({
     method: "POST",
-    url: "/maps/" + data.mapId + "/add/"+data.pointId +"/",
+    url: "/maps/" + data.mapId + "/edit/"+data.pointId +"/",
     data: data
   })
 

@@ -65,7 +65,7 @@ module.exports = (db) => {
     console.log(req.session.userId);
     const mapId = req.params.id;
     console.log(mapId);
-    let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS id, points.latitude, points.longitude, points.description, points.name AS points_name FROM maps
+    let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS id, points.latitude, points.longitude, points.description, points.name AS points_name, points.img AS points_img FROM maps
     JOIN pointsmaps ON maps.id = pointsmaps.map_id
     JOIN points ON points.id = pointsmaps.point_id
     WHERE maps.id = $1`;
@@ -88,7 +88,7 @@ module.exports = (db) => {
 
   router.get("/maps/:id/markers", (req, res) => {
     const id = req.params.id;
-    let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description, points.name AS points_name FROM maps
+    let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description, points.name AS points_name, points.img AS points_img FROM maps
     JOIN pointsmaps ON maps.id = pointsmaps.map_id
     JOIN points ON points.id = pointsmaps.point_id
     WHERE maps.id = $1`;
@@ -124,7 +124,6 @@ module.exports = (db) => {
           let ownerId = res.rows[0].id;
           let query = `INSERT INTO usermaps VALUES (DEFAULT, $1, $2)`;
           db.query(query, [ownerId, mapId]).then((res) => {
-            console.log("favourited", res);
           })
         })
         .catch((err) => {
@@ -142,7 +141,7 @@ module.exports = (db) => {
     if (!isLoggedIn(req.session)) {
       res.status(403).send("Please login or register first.");
     } else {
-      let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description AS points_description, points.name AS points_name, points.id AS point_id FROM maps
+      let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description AS points_description, points.name AS points_name, points.id AS point_id, points.img AS points_img FROM maps
     JOIN pointsmaps ON maps.id = pointsmaps.map_id
     JOIN points ON points.id = pointsmaps.point_id
     WHERE maps.id = $1`;
@@ -211,6 +210,8 @@ module.exports = (db) => {
     const points_desc = req.body.points_description;
     const points_lat = req.body.latitude;
     const points_long = req.body.longitude;
+    const points_img = req.body.points_img;
+console.log(points_img);
 
     const query = `SELECT id FROM users
       WHERE email = $1;`
@@ -221,9 +222,9 @@ module.exports = (db) => {
 
       }).then((data) => {
         let ownerId = data.rows[0].id;
-        const query = `UPDATE points SET name = $1, description = $2, latitude = $3, longitude =$4, owner_id = $5
-   WHERE id = $6;`
-        db.query(query, [points_name, points_desc, points_lat, points_long, ownerId, point_id])
+        const query = `UPDATE points SET name = $1, description = $2, latitude = $3, longitude =$4, owner_id = $5, img = $6
+        WHERE id = $7;`
+        db.query(query, [points_name, points_desc, points_lat, points_long, ownerId, points_img, point_id])
 
       }).then(data => {
         res.redirect(`/maps/${mapId}/edit/`);
@@ -238,6 +239,7 @@ module.exports = (db) => {
     const points_desc = req.body.points_description;
     const points_lat = req.body.latitude;
     const points_long = req.body.longitude;
+    const points_img = req.body.points_img;
 
     const query = `SELECT id FROM users
       WHERE email = $1;`
@@ -248,9 +250,9 @@ module.exports = (db) => {
 
       }).then((data) => {
         let ownerId = data.rows[0].id;
-        const query = `INSERT INTO points (id, name, description, latitude, longitude , owner_id)
-        VALUES(DEFAULT, $1, $2, $3, $4, $5) RETURNING *;`
-        return db.query(query, [points_name, points_desc, Number(points_lat), Number(points_long), ownerId])
+        const query = `INSERT INTO points (id, name, description, latitude, longitude , owner_id, img)
+        VALUES(DEFAULT, $1, $2, $3, $4, $5, $6) RETURNING *;`
+        return db.query(query, [points_name, points_desc, Number(points_lat), Number(points_long), ownerId, points_img])
 
       }).then(data2 => {
         const point_id = data2.rows[0].id;
