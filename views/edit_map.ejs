@@ -25,7 +25,7 @@
   <%- include('partials/_header') %>
   <!-- Editable table -->
   <div class="card">
-    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Edit Map <%=maps[0].name %></h3>
+    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Edit Map: <%=maps[0].name %></h3>
     <div class="card-body">
       <div id="table" class="table-editable">
         <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x"
@@ -50,11 +50,11 @@
               <td class="pt-3-half" contenteditable="true"><input type=hidden name="latitude"><%=map.latitude%></td>
               <td class="pt-3-half" contenteditable="true"><input type=hidden name="longitude"><%=map.longitude%></td>
               <td>
-                <span class="table-save" ><button type="submit"
+                <span id="button-save" class="table-save" ><button type="submit"
                     class="btn btn-outline-primary btn-sm my-0 save">Save</button></span>
               </td>
               <td>
-                <span class="table-remove"><button type="button"
+                <span id="button-delete" class="table-remove"><button type="button"
                     class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
               </td>
 

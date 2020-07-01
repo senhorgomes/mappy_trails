@@ -10,22 +10,24 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
 
   </head>
+
   <body>
     <%- include('partials/_header') %>
-    <main style="margin: 1em;">
-      <h3>The Best Maps for <%=category %> </h3>
+    <main>
+      <h2 class="top-page">The Best Maps for <%=category.charAt(0).toUpperCase()+category.slice(1) %> </h2>
       <% for(let map of maps) { %>
         <ul>
           <form action="/maps/<%=map.id%>/" method="GET">
-            <button type="submit" class="buttons"><%= map.name %></button>
+            <button id="map-name-button" type="submit" class="buttons"><%= map.name %></button>
           </form>
         </ul>
           <% } %>
     </main>
+
   </body>
 </html>
-<!-- FIX THIS UGLY BASTARD. -->
