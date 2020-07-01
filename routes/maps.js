@@ -272,8 +272,9 @@ module.exports = (db) => {
     const pointDescription = req.body.point_description;
     const pointLat = req.body.point_latitude;
     const pointLong = req.body.point_long;
+    const poingImg = req.body.point_img;
     if (pointName) {
-      let query = `INSERT INTO points (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
+      let query = `INSERT INTO points (name, description, img, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
       db.query(query, [pointName, pointDescription, pointLat, pointLong])
         .then(result => {
           console.log(result.rows);
