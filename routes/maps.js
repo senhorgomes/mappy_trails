@@ -275,7 +275,7 @@ module.exports = (db) => {
     const poingImg = req.body.point_img;
     if (pointName) {
       let query = `INSERT INTO points (name, description, img, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
-      db.query(query, [pointName, pointDescription, pointLat, pointLong])
+      db.query(query, [pointName, pointDescription, pointLat, pointLong, pointImg])
         .then(result => {
           console.log(result.rows);
           return res.json(result.rows[0]);
