@@ -17,10 +17,11 @@
 
   <body>
     <%- include('partials/_header') %>
-    <h1>Plot your trail, friend:</h1>
+    <h1 class="top-page">Plot your trail, friend:</h1>
   <!--New MAP Area-->
       <form id="new_map" action="/maps" method="post">
         <div class="form_group">
+          <label for="map_description">What do you want to name this trail?</label>
           <input id="map_name" name="map_name" type="text" class="form-control" placeholder="E.g., 'Coolest Cafes', 'Best Downtown Bars'">
           <small class="form-text text-muted">Feel free to get creative, but remember that others will see this title, too, unless you make it private.</small>
           <label for="map_category">Select list (select one):</label>
