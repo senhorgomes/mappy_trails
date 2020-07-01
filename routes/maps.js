@@ -204,14 +204,14 @@ module.exports = (db) => {
   //post request to edit the map in the database
   router.post("/maps/:mapId/edit/:pointId/", (req, res) => {
     console.log(req.body);
-    const map_id = req.body.mapId;
-    const point_id = req.body.pointId;
+    const map_id = req.params.mapId;
+    const point_id = req.params.pointId;
+    console.log(point_id);
     const points_name = req.body.points_name;
     const points_desc = req.body.points_description;
     const points_lat = req.body.latitude;
     const points_long = req.body.longitude;
     const points_img = req.body.points_img;
-console.log(points_img);
 
     const query = `SELECT id FROM users
       WHERE email = $1;`
@@ -222,12 +222,12 @@ console.log(points_img);
 
       }).then((data) => {
         let ownerId = data.rows[0].id;
-        const query = `UPDATE points SET name = $1, description = $2, latitude = $3, longitude =$4, owner_id = $5, img = $6
-        WHERE id = $7;`
-        db.query(query, [points_name, points_desc, points_lat, points_long, ownerId, points_img, point_id])
+        const query1 = `UPDATE points SET name = $1, description = $2, latitude = $3, longitude =$4, img = $5
+        WHERE id = $6;`
+        return db.query(query1, [points_name, points_desc, points_lat, points_long, points_img, point_id])
 
       }).then(data => {
-        res.redirect(`/maps/${mapId}/edit/`);
+        res.redirect(`/maps/${map_id}/edit/`);
       })
   })
 
@@ -266,100 +266,123 @@ console.log(points_img);
       })
   })
 
-  //posting new maps to database and redirecting to newly created map NOT COMPLETE
-  router.post("/maps/:mapId/points", (req, res) => {
-    //add the new map associated with the user to the database
-    const pointName = req.body.point_name;
-    const pointDescription = req.body.point_description;
-    const pointLat = req.body.point_latitude;
-    const pointLong = req.body.point_long;
-    if (pointName) {
-      let query2 = `INSERT INTO points (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
-      db.query(query2, [pointName, pointDescription, pointLat, pointLong])
-        .then(result => {
-          console.log(result.rows);
-          return res.json(result.rows[0]);
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
-    }
-  });
-  //posting new maps to database and redirecting to newly created map NOT COMPLETE
-  router.post("/maps/", (req, res) => {
-    //add the new map associated with the user to the database
-    //const mapId = 100004444;
-    const mapName = req.body.map_name;
-    const mapDescription = req.body.map_description;
-    const mapCategory = req.body.map_category;
-    const mapOwnerId = 1;//getOwnerId(req.session.userId);
+  //post request to remove points from map database
+  router.post("/maps/:mapId/remove/:pointId/", (req, res) => {
     console.log(req.body);
-    if (mapName) {
-      let query = `INSERT INTO maps (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`;
-      db.query(query, [mapName, mapDescription, mapCategory, mapOwnerId])
-        .then(result => {
-          console.log(result.rows);
-          return res.json(result.rows[0]);
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-          console.log(err);
-        });
-    }
-  });
+    const map_id = req.params.mapId;
+    const points_id = req.params.pointId;
 
-  //deleting maps
-  router.post("/maps/:id/", (req, res) => {
-    //delete map from data base
-    id = req.params.id;
-    const userId = req.session.userId;
-    if (!isLoggedIn(req.session)) {
-      res.status(403).send("Please login or register first.");
-    } else {
-      let query = `DELETE FROM maps
+    const query = `SELECT id FROM users
+        WHERE email = $1;`
+    db.query(query, [req.session.userId])
+      .then(data => {
+
+        return data;
+
+      }).then((data) => {
+        let ownerId = data.rows[0].id;
+        const query = `DELETE FROM points WHERE id =$1;`
+        db.query(query, [points_id]).then((data) => {
+          res.redirect(`/maps/${map_id}/edit/`);
+
+        })
+      })
+    })
+
+    //posting new maps to database and redirecting to newly created map NOT COMPLETE
+    router.post("/maps/:mapId/points", (req, res) => {
+      //add the new map associated with the user to the database
+      const pointName = req.body.point_name;
+      const pointDescription = req.body.point_description;
+      const pointLat = req.body.point_latitude;
+      const pointLong = req.body.point_long;
+      if (pointName) {
+        let query2 = `INSERT INTO points (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
+        db.query(query2, [pointName, pointDescription, pointLat, pointLong])
+          .then(result => {
+            console.log(result.rows);
+            return res.json(result.rows[0]);
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
+      }
+    });
+    //posting new maps to database and redirecting to newly created map NOT COMPLETE
+    router.post("/maps/", (req, res) => {
+      //add the new map associated with the user to the database
+      //const mapId = 100004444;
+      const mapName = req.body.map_name;
+      const mapDescription = req.body.map_description;
+      const mapCategory = req.body.map_category;
+      const mapOwnerId = 1;//getOwnerId(req.session.userId);
+      console.log(req.body);
+      if (mapName) {
+        let query = `INSERT INTO maps (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`;
+        db.query(query, [mapName, mapDescription, mapCategory, mapOwnerId])
+          .then(result => {
+            console.log(result.rows);
+            return res.json(result.rows[0]);
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+            console.log(err);
+          });
+      }
+    });
+
+    //deleting maps
+    router.post("/maps/:id/", (req, res) => {
+      //delete map from data base
+      id = req.params.id;
+      const userId = req.session.userId;
+      if (!isLoggedIn(req.session)) {
+        res.status(403).send("Please login or register first.");
+      } else {
+        let query = `DELETE FROM maps
       WHERE id = $1`;
-      db.query(query, [id])
-        .then(data => {
+        db.query(query, [id])
+          .then(data => {
 
-          res.redirect("/profile/maps")
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
-    }
-  })
+            res.redirect("/profile/maps")
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
+      }
+    })
 
 
-  //deleting favourited maps
-  router.post("/maps/:favemapid/favorites/", (req, res) => {
-    //delete map from data base
-    id = req.params.favemapid;
-    const userId = req.session.userId;
-    if (!isLoggedIn(req.session)) {
-      res.status(403).send("Please login or register first.");
-    } else {
-      let query = `DELETE FROM usermaps
+    //deleting favourited maps
+    router.post("/maps/:favemapid/favorites/", (req, res) => {
+      //delete map from data base
+      id = req.params.favemapid;
+      const userId = req.session.userId;
+      if (!isLoggedIn(req.session)) {
+        res.status(403).send("Please login or register first.");
+      } else {
+        let query = `DELETE FROM usermaps
       WHERE map_id = $1`;
-      db.query(query, [id])
-        .then(data => {
+        db.query(query, [id])
+          .then(data => {
 
-          res.redirect("/profile/maps")
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
+            res.redirect("/profile/maps")
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
 
-    }
-  });
+      }
+    });
 
-  return router;
-};
+    return router;
+  };
 

@@ -28,20 +28,18 @@ $('.table-add').click(() => {
 $(document).on('click', 'button.save', function () {
   window.alert("Refresh the page to see changes");
   const data = {};
-  console.log($(this)[0])
   const row = $(this).parents('tr')
   data.pointId = row.data("pointid")
   data.mapId = row.data("mapid")
 
   row.find('td').each(function () {
     const tableCell = $(this)
-    console.log(tableCell);
 
     const valueName = $(tableCell).find("input").attr("name")
     const value = $(tableCell).text();
-    if (valueName) {
+
       data[valueName] = value;
-    }
+
   })
   $.ajax({
     method: "POST",
@@ -71,6 +69,32 @@ $(document).on('click', 'button.add', function () {
   $.ajax({
     method: "POST",
     url: "/maps/" + window.location.href.split('/').filter(e=>e!=="")[3] + "/add/point",
+    data: data
+  })
+
+});
+
+//removes a point from the map
+$(document).on('click', 'button.remove', function () {
+  window.alert("Refresh the page to see changes");
+  const data = {};
+  const row = $(this).parents('tr')
+  data.pointId = row.data("pointid")
+  data.mapId = row.data("mapid")
+
+  row.find('td').each(function () {
+    const tableCell = $(this)
+    console.log(tableCell);
+
+    const valueName = $(tableCell).find("input").attr("name")
+    const value = $(tableCell).text();
+    if (valueName) {
+      data[valueName] = value;
+    }
+  })
+  $.ajax({
+    method: "POST",
+    url: "/maps/" + data.mapId + "/remove/"+data.pointId +"/",
     data: data
   })
 
