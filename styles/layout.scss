@@ -1,10 +1,5 @@
 body {
   background-image: url("../images/BACKGROUNDnik-shuliahin-rkFIIE9PxH0-unsplash.jpg");
-
-
-  h1 {
-    color: #595959;
-  }
 }
 
 #login-form {
@@ -20,10 +15,6 @@ body {
   align-items: center;
   width: 19em;
   height: 19em;
-}
-
-a {
-  color: inherit;
 }
 
 h1 {
@@ -91,11 +82,13 @@ h2, h3, h4, h5, h6 {
 }
 
 a {
+  color: inherit;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   text-decoration: none !important;
 }
+
 .firstRow {
   display: flex;
 }
@@ -190,7 +183,22 @@ a {
 #head-categories:hover {
   text-shadow: 2px 2px 3px #87b6A7, 3px 3px 5px #E3F09B;
 }
+#logged-user {
+  display: flex;
+  color: #87b6A7;
+  text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
+}
+#logged-user:focus {
+  outline: none !important;
+}
 
+#nav-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  text-decoration: none !important;
+}
 
 //For the favorite icon:
 .ico {
@@ -199,7 +207,6 @@ a {
   fill: #232323;
   transition: .4s;
 }
-
 .liked {
   transform: scale(1.05) rotate(360deg);
   background-color: #C62828;
@@ -215,7 +222,6 @@ td {
 
 th {
   background-color: rgba(127,127,127, .4);
-
 }
 
 .my-map-item {
@@ -227,13 +233,9 @@ th {
 
 //For map display page:
 #map-title {
-
   font-family: 'Rye', cursive;
   // background-color: rgba(231,216,201, .4);
 }
-
-
-
 .map-container {
   border: 0.3em outset #FCD0A1; 
 }
