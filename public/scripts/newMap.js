@@ -17,7 +17,7 @@ $(() => {
   $('#new_point').on('submit', (evt) => {
     evt.preventDefault();
     console.log("ready");
-    $.ajax("/maps/", {
+    $.ajax("/maps/:mapId/points", {
       method: 'POST', data: $('form')
         .serialize()
     })
