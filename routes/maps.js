@@ -233,7 +233,7 @@ module.exports = (db) => {
 
 
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
-  router.post("/maps/:id/points", (req, res) => {
+  router.post("/maps/:mapId/points", (req, res) => {
     //add the new map associated with the user to the database
     const pointName = req.body.point_name;
     const pointDescription = req.body.point_description;
