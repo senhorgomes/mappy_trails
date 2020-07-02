@@ -64,4 +64,10 @@ $(() => {
         console.log(res);
       });
   });
+  $('#all_done').on('submit', (evt) => {
+    evt.preventDefault();
+    window.location.href = `http://localhost:8080/maps/${newMapOutput.id}`
+    // $.ajax(`/maps/submit/${newMapOutput.id}/`, {
+    //   method: 'GET'})
+    })
 });
