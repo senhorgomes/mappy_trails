@@ -41,6 +41,7 @@ Mappy Trails: because no trip should be unremarkable.
 - Google Maps Geocoding API
 
 ## Final Product
+A quick overview of some of the functionality of the website is illustrated in the following animation.
 !["Overview"](https://github.com/senhorgomes/mappy_trails/blob/master/docs/overview-my-maps.gif?raw=true)
 
 ## Getting Started
