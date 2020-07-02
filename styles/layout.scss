@@ -124,7 +124,7 @@ h2, h3, h4, h5, h6 {
 a {
   color: inherit;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   text-decoration: none !important;
 }
@@ -277,19 +277,6 @@ a {
   float: right;
 }
 
-//For the favorite icon:
-.ico {
-  border-radius: 50%;
-  cursor: pointer;
-  fill: #232323;
-  transition: .4s;
-}
-.liked {
-  transform: scale(1.05) rotate(360deg);
-  background-color: #C62828;
-  padding: .1rem;
-  fill: white;
-}
 
 //For my_maps page tables:
 tr {
@@ -311,7 +298,7 @@ th {
 }
 
 .my-map-item {
-  text-align: center;
+  text-align: center!important;
   font-family: 'Shadows Into Light', cursive;
   color: #5B5941;
   text-shadow: 1px 2px 0px #FCD0A1;
@@ -343,7 +330,6 @@ th {
 }
 
 .pt-3-half {
-  //font-family: 'Shadows Into Light', cursive;
   color: #5B5941;
   text-shadow: 1px 1px 0px #FCD0A1;
   text-align: center;
@@ -359,11 +345,54 @@ th {
 //For map display page:
 #map-title {
   font-family: 'Rye', cursive;
+  margin-left: 126.88px;
 }
 
+#map-head-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  min-width: -webkit-fill-available;
+  background-color: rgba(231,216,201, .8);
+}
 .map-container {
   border: 0.3em outset #FCD0A1; 
 }
+
+#fav-text-indicator {
+  position: relative;
+  margin-top: 2em;
+  text-shadow: 2px 2px 8px #87b6A7, 3px 3px 8px #E3F09B;
+  color: #f85b3f;
+
+}
+#fav-text {
+  position: relative;
+  margin-top: -2em;
+  margin-left: 1.75em;
+  font-weight: 800;
+}
+#fav-text-arrow {
+  position: relative;
+  margin-top: 2rem;
+}
+
+//For the favorite icon on map display page:
+.ico {
+  margin-left: 0.5em;
+  border-radius: 50%;
+  cursor: pointer;
+  fill: #595959;
+  transition: 0.4s;
+  
+}
+.liked {
+  transform: scale(1.05) rotate(360deg);
+  background-color: #C62828;
+  padding: .1rem;
+  fill: white;
+}
+
 
 
 //Color Palette:

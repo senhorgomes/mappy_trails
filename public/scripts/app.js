@@ -21,4 +21,9 @@ $(() => {
     })
   });
 
+  setTimeout(function () {
+   $('#fav-text-indicator').css('visibility', 'hidden')
+  }, 5000);
+  
 });
+
