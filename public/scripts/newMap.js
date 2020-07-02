@@ -57,6 +57,7 @@ $(() => {
         $('#point_long').val("");
         $('#new_point').hide();
         $('#new_point_address button').slideDown('slow');
+        alert('The point has been added to your map!');
         console.log(res);
       });
   });
