@@ -25,7 +25,7 @@
         <div class="form_group">
           <label for="map_description">What do you want to name this trail?</label>
           <input id="map_name" name="map_name" type="text" class="form-control" placeholder="E.g., 'Coolest Cafes', 'Best Downtown Bars'">
-          
+
           <label for="map_category">What kind of place is it?</label>
           <select name="map_category" class="form-control" id="maps-list">
             <option value ="cafes">Cafes</option>
@@ -40,7 +40,7 @@
         <button class="buttons" type="submit">Add Some Destinations</button>
       </form>
   <!--New POINTS area-->
-     
+
       <form id="new_point_address" action="/maps/:mapId/points/" method="post">
         <div class="form_group">
             <label for="point_description">Let's add a point to this map, first, let's start with the address.</label>
@@ -53,7 +53,7 @@
             <div class="form_group">
             <label for="point_description">Nice. What do you want to call it on your map?</label>
             <input name="point_name" type="text" class="form-control" placeholder="E.g., 'Moon Bean Cafe', 'Sneaky Dee's'">
-            
+
             <label for="point_description">Sounds like a great spot. Anything else to add?</label>
             <textarea name="point_description" class="form-control" rows="3" id="comment"></textarea>
             <label for="point_img">How about a picture of the location?</label>
@@ -61,7 +61,11 @@
             <input type="hidden" id="point_lat" name="point_lat">
             <input type="hidden" id="point_long" name="point_long">
             <button class="buttons" type="submit">Mark the Spot</button>
-            </div>
-      </form>
+          </div>
+        </form>
+        <!-- Returns users to maps page once a point has been added -->
+        <form id="all_done" action="/maps/:mapId/points/submit" method="get">
+          <button class="buttons" type="submit">All done!</button>
+        </form>
   </body>
 </html>
