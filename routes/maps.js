@@ -64,20 +64,40 @@ module.exports = (db) => {
   router.get("/maps/:id/", (req, res) => {
     console.log(req.session.userId);
     const mapId = req.params.id;
+    const userId = req.session.userId
     console.log(mapId);
-    let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS id, points.latitude, points.longitude, points.description, points.name AS points_name, points.img AS points_img FROM maps
+    let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS id, points.latitude, points.longitude, points.description, points.name AS points_name, points.img AS points_img, usermaps.map_id AS favemap FROM maps
     JOIN pointsmaps ON maps.id = pointsmaps.map_id
     JOIN points ON points.id = pointsmaps.point_id
-    WHERE maps.id = $1`;
-    db.query(query, [mapId])
+    LEFT JOIN users ON users.email = $1
+    LEFT JOIN usermaps ON usermaps.user_id = users.id
+    WHERE maps.id = $2`;
+    db.query(query, [userId, mapId])
       .then(data => {
-        console.log(data.rows);
-        let templateVars = {
-          maps: data.rows,
-          userId: req.session.userId
-        }
-        //pass the category chosen to the view file
-        res.render("display_map", templateVars)
+        return data
+
+      }).then((data) => {
+        const maps = data.rows;
+        let query = `SELECT  usermaps.map_id AS favemap FROM usermaps
+        JOIN users ON usermaps.user_id = users.id
+        WHERE users.email =$1`;
+        db.query(query, [userId])
+          .then((data2) => {
+            const favemaps_obj = data2.rows;
+            //making favemaps an array of favourite maps
+            const favemaps_arr = [];
+            for (item of favemaps_obj) {
+              favemaps_arr.push(item.favemap);
+            }
+            let templateVars = {
+              maps,
+              favemaps : favemaps_arr,
+              userId
+            }
+            //pass the category chosen to the view file
+            res.render("display_map", templateVars)
+          })
+
       })
       .catch(err => {
         res
@@ -88,11 +108,15 @@ module.exports = (db) => {
 
   router.get("/maps/:id/markers", (req, res) => {
     const id = req.params.id;
-    let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS map_id, points.latitude, points.longitude, points.description, points.name AS points_name, points.img AS points_img FROM maps
+    const userId = req.session.userId
+
+    let query = `SELECT maps.name AS name, maps.category AS category,maps.owner_id AS owner_id, maps.id AS id, points.latitude, points.longitude, points.description, points.name AS points_name, points.img AS points_img, usermaps.map_id AS favemap FROM maps
     JOIN pointsmaps ON maps.id = pointsmaps.map_id
     JOIN points ON points.id = pointsmaps.point_id
-    WHERE maps.id = $1`;
-    db.query(query, [id])
+    LEFT JOIN users ON users.email = $1
+    LEFT JOIN usermaps ON usermaps.user_id = users.id
+    WHERE maps.id = $2`;
+    db.query(query, [userId, id])
       .then(data => {
         let templateVars = {
           maps: data.rows,
@@ -284,18 +308,18 @@ module.exports = (db) => {
           return res.json(result.rows[0]);
         })
         .then(result2 => {
-        const pointID = result2.rows[0].id;
-        console.log("point id", pointID);
-        const query = `INSERT INTO pointsmaps (id, point_id, map_id)
+          const pointID = result2.rows[0].id;
+          console.log("point id", pointID);
+          const query = `INSERT INTO pointsmaps (id, point_id, map_id)
         VALUES(DEFAULT, $1, $2);`
-        db.query(query, [pointID, mapID])
+          db.query(query, [pointID, mapID])
 
-      })
+        })
         .catch(err => {
           res
             .status(500)
             .json({ error: err.message });
-            console.log(err);
+          console.log(err);
         });
     }
   });
@@ -319,7 +343,7 @@ module.exports = (db) => {
           res
             .status(500)
             .json({ error: err.message });
-            console.log(err);
+          console.log(err);
         });
     }
   });
@@ -344,102 +368,102 @@ module.exports = (db) => {
 
         })
       })
-    })
+  })
 
-    //posting new maps to database and redirecting to newly created map NOT COMPLETE
-    router.post("/maps/:mapId/points", (req, res) => {
-      //add the new map associated with the user to the database
-      const pointName = req.body.point_name;
-      const pointDescription = req.body.point_description;
-      const pointLat = req.body.point_latitude;
-      const pointLong = req.body.point_long;
-      if (pointName) {
-        let query2 = `INSERT INTO points (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
-        db.query(query2, [pointName, pointDescription, pointLat, pointLong])
-          .then(result => {
-            console.log(result.rows);
-            return res.json(result.rows[0]);
-          })
-          .catch(err => {
-            res
-              .status(500)
-              .json({ error: err.message });
-          });
-      }
-    });
-    //posting new maps to database and redirecting to newly created map NOT COMPLETE
-    router.post("/maps/", (req, res) => {
-      //add the new map associated with the user to the database
-      //const mapId = 100004444;
-      const mapName = req.body.map_name;
-      const mapDescription = req.body.map_description;
-      const mapCategory = req.body.map_category;
-      const mapOwnerId = 1;//getOwnerId(req.session.userId);
-      console.log(req.body);
-      if (mapName) {
-        let query = `INSERT INTO maps (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`;
-        db.query(query, [mapName, mapDescription, mapCategory, mapOwnerId])
-          .then(result => {
-            console.log(result.rows);
-            return res.json(result.rows[0]);
-          })
-          .catch(err => {
-            res
-              .status(500)
-              .json({ error: err.message });
-            console.log(err);
-          });
-      }
-    });
+  //posting new maps to database and redirecting to newly created map NOT COMPLETE
+  router.post("/maps/:mapId/points", (req, res) => {
+    //add the new map associated with the user to the database
+    const pointName = req.body.point_name;
+    const pointDescription = req.body.point_description;
+    const pointLat = req.body.point_latitude;
+    const pointLong = req.body.point_long;
+    if (pointName) {
+      let query2 = `INSERT INTO points (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`
+      db.query(query2, [pointName, pointDescription, pointLat, pointLong])
+        .then(result => {
+          console.log(result.rows);
+          return res.json(result.rows[0]);
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+    }
+  });
+  //posting new maps to database and redirecting to newly created map NOT COMPLETE
+  router.post("/maps/", (req, res) => {
+    //add the new map associated with the user to the database
+    //const mapId = 100004444;
+    const mapName = req.body.map_name;
+    const mapDescription = req.body.map_description;
+    const mapCategory = req.body.map_category;
+    const mapOwnerId = 1;//getOwnerId(req.session.userId);
+    console.log(req.body);
+    if (mapName) {
+      let query = `INSERT INTO maps (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`;
+      db.query(query, [mapName, mapDescription, mapCategory, mapOwnerId])
+        .then(result => {
+          console.log(result.rows);
+          return res.json(result.rows[0]);
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+          console.log(err);
+        });
+    }
+  });
 
-    //deleting maps
-    router.post("/maps/:id/", (req, res) => {
-      //delete map from data base
-      id = req.params.id;
-      const userId = req.session.userId;
-      if (!isLoggedIn(req.session)) {
-        res.status(403).send("Please login or register first.");
-      } else {
-        let query = `DELETE FROM maps
+  //deleting maps
+  router.post("/maps/:id/", (req, res) => {
+    //delete map from data base
+    id = req.params.id;
+    const userId = req.session.userId;
+    if (!isLoggedIn(req.session)) {
+      res.status(403).send("Please login or register first.");
+    } else {
+      let query = `DELETE FROM maps
       WHERE id = $1`;
-        db.query(query, [id])
-          .then(data => {
+      db.query(query, [id])
+        .then(data => {
 
-            res.redirect("/profile/maps")
-          })
-          .catch(err => {
-            res
-              .status(500)
-              .json({ error: err.message });
-          });
-      }
-    })
+          res.redirect("/profile/maps")
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+    }
+  })
 
 
-    //deleting favourited maps
-    router.post("/maps/:favemapid/favorites/", (req, res) => {
-      //delete map from data base
-      id = req.params.favemapid;
-      const userId = req.session.userId;
-      if (!isLoggedIn(req.session)) {
-        res.status(403).send("Please login or register first.");
-      } else {
-        let query = `DELETE FROM usermaps
+  //deleting favourited maps
+  router.post("/maps/:favemapid/favorites/", (req, res) => {
+    //delete map from data base
+    id = req.params.favemapid;
+    const userId = req.session.userId;
+    if (!isLoggedIn(req.session)) {
+      res.status(403).send("Please login or register first.");
+    } else {
+      let query = `DELETE FROM usermaps
       WHERE map_id = $1`;
-        db.query(query, [id])
-          .then(data => {
+      db.query(query, [id])
+        .then(data => {
 
-            res.redirect("/profile/maps")
-          })
-          .catch(err => {
-            res
-              .status(500)
-              .json({ error: err.message });
-          });
+          res.redirect("/profile/maps")
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
 
-      }
-    });
+    }
+  });
 
-    return router;
-  };
+  return router;
+};
 
