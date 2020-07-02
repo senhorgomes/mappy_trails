@@ -1,5 +1,9 @@
-# Mappy Trails LHL Midterm Project
+# Mappy Trails (Full Stack Web App)
 --from the brains of Hannah Bregman, Bryan Gomes, and Charlie Hayes, in conjunction with Lighthouse Labs--
+
+Full stack website built with Node.js, Express, PostgreSQL in the back-end, and HTML, CSS, JavaScript, JQuery for the front-end.
+
+## User Stories and Theme
 
 Travelling, especially in a city, can be a joyless affair. You have an appointment, and you arrive early, so stand beneath the eaves as the snow pours down, checking your watch until it's socially acceptable for you to enter. 
 
@@ -11,30 +15,33 @@ Enter Mappy Trails. Modeled after the treasure maps of old and leveraging the fu
 
 Mappy Trails: because no trip should be unremarkable.
 
+## Functionality
+
+- Users can see a list of the available maps
+- Users can view a map
+- A map can contain many points
+- Each point can have: a title, description, and image
+- Authenticated users can create maps
+- Authenticated users can modify maps (add, edit, remove points)
+- Users can favourite a map
+- Users have profiles, indicating their favourite maps and maps they've contributed to
+
 ## Dependencies
 
 - Body-Parser: 1.19.0,
-- Chalk: 2.4.2,
 - Cookie-Session: 1.4.0,
-- Dotenv: 2.0.0,
 - Ejs: 2.6.2,
 - Express: 4.17.1,
-- Morgan: 1.9.1,
-- Node-Sass-Middleware: 0.11.0,
 - PG: 6.4.2,
 - PG-Native: 3.0.0
-- Nodemon: 1.19.1
 
 ## APIs
 
-????
-
+- Google Maps JavaScript API
+- Google Maps Geocoding API
 
 ## Final Product
-!["Screenshot of "]()
-!["Screenshot of "]()
-!["Screenshot of "]()
-!["Screenshot of "]()
+!["Overview"]()
 
 ## Getting Started
 - Install all dependencies (using the `npm install` command).
