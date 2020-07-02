@@ -12,6 +12,11 @@ $(() => {
     })
   })
 
+  setTimeout(function () {
+    console.log("DID IT GO AWAY?");
+    $('#fav-text-indicator').css('visibility', 'hidden')
+  }, 8000);
+
   $('#unfavorite').addEventListener('click',function(evt){
     evt.preventDefault();
     const favemapId = row.data("mapid")
@@ -20,10 +25,5 @@ $(() => {
       url: "/maps/"+favemapId+"/favorites/"
     })
   });
-
-  setTimeout(function () {
-   $('#fav-text-indicator').css('visibility', 'hidden')
-  }, 5000);
-  
 });
 

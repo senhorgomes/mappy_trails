@@ -360,11 +360,12 @@ th {
 }
 
 #fav-text-indicator {
+  visibility: visible;
+  display: block;
   position: relative;
   margin-top: 2em;
   text-shadow: 2px 2px 8px #87b6A7, 3px 3px 8px #E3F09B;
   color: #f85b3f;
-
 }
 #fav-text {
   position: relative;
