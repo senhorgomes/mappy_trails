@@ -22,11 +22,13 @@ label {
   margin-left: 0.4em;
   padding-top: 0.25em;
   font-family: 'Shadows Into Light', cursive;
-  color: #5B5941;
-  text-shadow: 2px 3px 0px #FCD0A1;
+  color: #2e2d21;
+  text-shadow: 2px 2px 0px #FCD0A1;
+               //2.5px 2.5px 0px rgba(64, 60, 121, 0.5);;
   text-align: center;
-  font-weight: 600;
+  font-weight: 800;
   font-size: x-large;
+  
 }
 
 h1 {
@@ -61,18 +63,23 @@ h2, h3, h4, h5, h6 {
 }
 
 .form-group {
-  
+  padding-right: 1em;
   background-color: rgba(231,216,201, .4);
 }
 
 .form-control {
   margin-left: 0.5em;
   margin-right: 10em;
+  width: 98%;
+}
 
+#added-spot {
+  margin-top: 2em;
 }
 
 #comment {
   margin-right: 1em;
+  width: 98%;
 }
 
 .category {
@@ -154,6 +161,10 @@ a {
   font-family: 'Rye', cursive;
   letter-spacing: 0.05em;
   border-radius: 0;
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
 }
 
 .button-head {
@@ -195,6 +206,16 @@ a {
 }
 
 // For the nav-bar elements
+#nav-flex {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+}
+#nav-flex-right {
+  display: flex;
+  // justify-content: flex-end;
+}
+
 .navbar-custom {
   display: flex;
   justify-content: space-between;
@@ -220,9 +241,13 @@ a {
 #head-categories:hover {
   text-shadow: 2px 2px 3px #87b6A7, 3px 3px 5px #E3F09B;
 }
+
+//Welcome message for user:
 #logged-user {
   display: flex;
+  align-self: right;
   color: #87b6A7;
+  padding-right: 0.75em;
   text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
 }
 #logged-user:focus {
@@ -281,8 +306,19 @@ th {
 }
 
 //For edit_maps page tables:
+.card {
+  background-color: rgba(231,216,201, .7);
+}
 .card-header {
   background: none!important;
+}
+
+.btn {
+  font-family: 'Rye', cursive;
+}
+
+#edit-add-line {
+  text-align: right;
 }
 
 .text-muted {
@@ -297,6 +333,7 @@ th {
   text-shadow: 1px 1px 0px #FCD0A1;
   text-align: center;
   font-weight: 900;
+  font-stretch: expanded;
   font-size: larger;
 }
 

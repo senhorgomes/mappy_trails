@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>Create New Map</title>
+    <link rel="icon" href="/images/tumbleweed-icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -25,14 +26,14 @@
           <label for="map_description">What do you want to name this trail?</label>
           <input id="map_name" name="map_name" type="text" class="form-control" placeholder="E.g., 'Coolest Cafes', 'Best Downtown Bars'">
           <small class="form-text text-muted">Feel free to get creative, but remember that others will see this title, too, unless you make it private.</small>
-          <label for="map_category">Select list (select one):</label>
+          <label for="map_category">What kind of place is it?</label>
           <select name="map_category" class="form-control" id="maps-list">
             <option value ="cafes">Cafes</option>
             <option value ="restaurants">Foods</option>
             <option value ="bars">Bars</option>
             <option value ="arts">Arts</option>
           </select>
-          <label for="map_description">We're listening--tell us some more:</label>
+          <label for="map_description">We're listening&mdash;tell us some more:</label>
           <textarea name="map_description" class="form-control" rows="3" id="comment"></textarea>
 
         </div>
@@ -46,11 +47,12 @@
       </form>
   <!--New POINTS submitted area-->
       <form id="new_point" action="/maps/:mapId/points/submit" method="post">
+        <label for="point_description">Nice. What do you want to call it on your map?</label>
         <input name="point_name" type="text" class="form-control" placeholder="E.g., 'Moon Bean Cafe', 'Sneaky Dee's'">
         <small class="form-text text-muted">Feel free to get creative, but remember that others will see this title, too, unless you make it private.</small>
         <label for="point_description">Sounds like a great spot. Anything else to add?</label>
         <textarea name="point_description" class="form-control" rows="3" id="comment"></textarea>
-        <label for="point_img">How about a picture of the locaiton?</label>
+        <label for="point_img">How about a picture of the location?</label>
         <input name="point_img" type="text" class="form-control" placeholder="E.g., 'http://www.imagelink.com'">
         <input type="hidden" id="point_lat" name="point_lat">
         <input type="hidden" id="point_long" name="point_long">

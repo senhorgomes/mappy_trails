@@ -1,23 +1,26 @@
 <header>
   <!-- Header elements that should always be displayed: -->
   <nav id="nav-list" class="navbar navbar-expand-md navbar-custom">
+    <div id="nav-flex">
     <img src="/images/mappyTrailsLogo2.png" width="60" height="38">
-    <a class="nav-item nav-link" id="head-categories" href="/">Categories</a>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <% if(userId){ %>
-        <!-- User is logged in: display relevant links -->
-        <div class="navbar-nav">
-          <a class="nav-item nav-link" id="head-maps" href="/profile/maps/">My Maps</a>
-          <a class="nav-item nav-link" id="head-new" href="/maps/new/">Create a New Map</a>
-          <form class="form-inline" action="/logout" method="POST">
-            <a id="logged-user" href="#">Welcome, <%= userId %>!</a>
-            <button class="button-head" type="submit">Logout</button></form>
-            <% } else{ %>
-              <!-- No logged in user: display login button -->
-              <form class="form-inline" action="/login" method="GET">
-                <button type="submit" class="button-head" style="margin-right: 10px">Login/Register</button>
-              </form>
-            <% } %>
-        </div>
+      <a class="nav-item nav-link" id="head-categories" href="/">Categories</a>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <% if(userId){ %>
+          <!-- User is logged in: display relevant links -->
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" id="head-maps" href="/profile/maps/">My Maps</a>
+            <a class="nav-item nav-link" id="head-new" href="/maps/new/">Create a New Map</a>
+            <div id="nav-flex-right"><a id="logged-user" href="#">Welcome, <%= userId %>!</a>
+              <form class="form-inline" action="/logout" method="POST">
+                <button class="button-head" type="submit">Logout</button></form>
+                <% } else{ %>
+                  <!-- No logged in user: display login button -->
+                  <form class="form-inline" action="/login" method="GET">
+                    <button style="float: right;" type="submit" class="button-head" style="margin-right: 10px">Login/Register</button>
+                  </form>
+                <% } %>
+              </div>
+          </div>
+      </div>
   </nav>
 </header>
