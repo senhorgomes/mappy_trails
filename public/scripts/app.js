@@ -12,12 +12,18 @@ $(() => {
     })
   })
 
-  $('#unfavorite').click(function (evt) {
+  setTimeout(function () {
+    console.log("DID IT GO AWAY?");
+    $('#fav-text-indicator').css('visibility', 'hidden')
+  }, 8000);
+
+  $('#unfavorite').addEventListener('click',function(evt){
+    evt.preventDefault();
     const favemapId = row.data("mapid")
     $.ajax({
       method: "POST",
       url: "/maps/" + favemapId + "/favorites/"
     })
   });
-
 });
+
