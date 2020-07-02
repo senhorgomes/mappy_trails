@@ -59,7 +59,11 @@ module.exports = (db) => {
       res.render("new_map", templateVars);
     }
   });
+   //Redirects users to shown map, after map is submitted
+   router.get("/maps/submit/:mapId/", (req, res) => {
 
+     res.render(`/maps/${req.params.mapId}/`);
+   });
   //displays the chosen map
   router.get("/maps/:id/", (req, res) => {
     console.log(req.session.userId);

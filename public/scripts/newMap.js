@@ -3,6 +3,8 @@ const geocoder = new google.maps.Geocoder();
 $(() => {
   $('#new_point').hide();
   $('#new_point_address').hide();
+  $('#all_done').hide();
+
   //On submission, it will hide the submission button and populate a form to add a point address
   $('#new_map').on('submit', (evt) => {
     evt.preventDefault();
@@ -58,7 +60,14 @@ $(() => {
         $('#new_point').hide();
         $('#new_point_address button').slideDown('slow');
         alert('The point has been added to your map!');
+        $('#all_done').slideDown('slow');
         console.log(res);
       });
   });
+  $('#all_done').on('submit', (evt) => {
+    evt.preventDefault();
+    window.location.href = `http://localhost:8080/maps/${newMapOutput.id}`
+    // $.ajax(`/maps/submit/${newMapOutput.id}/`, {
+    //   method: 'GET'})
+    })
 });
