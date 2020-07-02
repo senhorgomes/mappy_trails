@@ -25,10 +25,9 @@ label {
   color: #2e2d21;
   text-shadow: 2px 2px 0px #FCD0A1;
                //2.5px 2.5px 0px rgba(64, 60, 121, 0.5);;
-  text-align: center;
+  text-align: left;
   font-weight: 800;
   font-size: x-large;
-  
 }
 
 h1 {
@@ -45,7 +44,7 @@ h1 {
   padding-top: 1em;
   margin-top: 0;
   margin-bottom: 0;
-  background-color: rgba(231,216,201, .4);
+  background-color: rgba(231,216,201, .8);
 }
 
 h2, h3, h4, h5, h6 {
@@ -58,14 +57,22 @@ h2, h3, h4, h5, h6 {
 }
 
 .header-box {
-  background-color: rgba(231,216,201, .4);
+  background-color: rgba(231,216,201, .8);
   padding-bottom: 0.25em;
 }
 
 .form-group {
   padding-right: 1em;
-  background-color: rgba(231,216,201, .4);
+  background-color: rgba(231,216,201, .8);
+  padding-bottom: 1em;
 }
+
+.form_group {
+  padding-right: 1em;
+  background-color: rgba(231,216,201, .8);
+  padding-bottom: 1em;
+}
+
 
 .form-control {
   margin-left: 0.5em;
@@ -104,8 +111,8 @@ h2, h3, h4, h5, h6 {
   font-weight: bold;
   font-size: 2.5em;
   text-shadow:  0px 4px 3px rgba(0,0,0,0.4),
-                0px 8px 13px rgba(0,0,0,0.1),
-                0px 18px 23px rgba(0,0,0,0.1);
+                0px 8px 13px rgba(0,0,0,0.5),
+                0px 18px 23px rgba(0,0,0,0.5);
 }
 
 .container {
@@ -192,8 +199,8 @@ a {
 }
 
 #button-delete {
-  color: #f81b1b;
-  background-color: #595959;
+  color: #000000;
+  background-color: #ff4444;
   border-color: #F7D08A;
   font-family: 'Rye', cursive;
   letter-spacing: 0.05em;
@@ -227,11 +234,13 @@ a {
   text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
 }
 .navbar-custom .navbar-nav .nav-link {
-  color: #87b6A7;
+  color: #68867d;
+  font-weight: bolder;
   text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
 }
 #head-categories {
-  color: #87b6A7;
+  color: #68867d;
+  font-weight: bolder;
   text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
 }
 
@@ -246,8 +255,10 @@ a {
 #logged-user {
   display: flex;
   align-self: right;
-  color: #87b6A7;
+  color: #68867d;
+  font-weight: bolder;
   padding-right: 0.75em;
+  padding-left: 6em;
   text-shadow: 0 0 3px #F7D08A, 0 0 5px #F79F79;
 }
 #logged-user:focus {
@@ -287,12 +298,16 @@ tr {
 
 td {
   text-decoration: none!important;
-  background-color: rgba(231,216,201, .4);
+  background-color: rgba(231,216,201, .8);
 }
 
 th {
   vertical-align: baseline;
-  background-color: rgba(127,127,127, .4);
+  background-color: rgba(127,127,127, .8);
+}
+
+#img-url {
+  max-width: 20vw;
 }
 
 .my-map-item {
@@ -328,11 +343,11 @@ th {
 }
 
 .pt-3-half {
-  font-family: 'Shadows Into Light', cursive;
+  //font-family: 'Shadows Into Light', cursive;
   color: #5B5941;
   text-shadow: 1px 1px 0px #FCD0A1;
   text-align: center;
-  font-weight: 900;
+  font-weight: 700;
   font-stretch: expanded;
   font-size: larger;
 }
