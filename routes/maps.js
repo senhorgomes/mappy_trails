@@ -264,21 +264,24 @@ module.exports = (db) => {
     const pointLat = req.body.point_lat;
     const pointLong = req.body.point_long;
     const pointImg = req.body.point_img;
-    const ownerId = 1;
+    const query = `SELECT id FROM users
+    WHERE email = $1;`
+    db.query(query, [req.session.userId]).then(result => {
+      let ownerId = result.rows[0].id;
+      console.log(result.rows)
+      return ownerId
+    }).then( ownerId => {
     if (pointName) {
       let query = `INSERT INTO points (name, description, owner_id, img, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`
       db.query(query, [pointName, pointDescription, ownerId, pointImg, pointLat, pointLong])
         .then(result => {
           console.log(result.rows);
-          return res.json(result.rows[0]);
-        })
-        .then(result2 => {
-          const pointID = result2.rows[0].id;
+          const pointID = result.rows[0].id;
           console.log("point id", pointID);
           const query = `INSERT INTO pointsmaps (id, point_id, map_id)
-        VALUES(DEFAULT, $1, $2);`
+          VALUES(DEFAULT, $1, $2);`
           db.query(query, [pointID, mapID])
-
+          return res.json(result.rows[0]);
         })
         .catch(err => {
           res
@@ -286,20 +289,25 @@ module.exports = (db) => {
             .json({ error: err.message });
           console.log(err);
         });
-    }
+      }
+    })
   });
   //posting new maps to database and redirecting to newly created map NOT COMPLETE
   router.post("/maps", (req, res) => {
-    //add the new map associated with the user to the database
-    //const mapId = 100004444;
     const mapName = req.body.map_name;
     const mapDescription = req.body.map_description;
     const mapCategory = req.body.map_category;
-    const mapOwnerId = 1;//getOwnerId(req.session.userId);
-    console.log(req.body);
+    //Find user ID and places it as ownerId so that every point and map is marked by the perosn who created it
+    const query = `SELECT id FROM users
+    WHERE email = $1;`
+    db.query(query, [req.session.userId]).then(result => {
+      let ownerId = result.rows[0].id;
+      console.log(result.rows)
+      return ownerId
+    }).then( ownerId => {
     if (mapName) {
       let query = `INSERT INTO maps (name, description, category, owner_id) VALUES ($1, $2, $3, $4) RETURNING *`;
-      db.query(query, [mapName, mapDescription, mapCategory, mapOwnerId])
+      db.query(query, [mapName, mapDescription, mapCategory, ownerId])
         .then(result => {
           console.log(result.rows);
           return res.json(result.rows[0]);
@@ -310,7 +318,8 @@ module.exports = (db) => {
             .json({ error: err.message });
           console.log(err);
         });
-    }
+      }
+    })
   });
   //post request to remove points from map database
   router.post("/maps/:mapId/remove/:pointId/", (req, res) => {

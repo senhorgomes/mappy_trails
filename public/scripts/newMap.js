@@ -22,33 +22,24 @@ $(() => {
   $('#new_point_address').on('submit', (evt) => {
     evt.preventDefault();
     console.log("ready", newMapOutput);
-    // $.ajax(`/maps/${newMapOutput.id}/points`, {
-    //   method: 'GET', data: $('form')
-    //     .serialize()
-    // })
-    //   .then((res) => {
-          var address = $('#point_add').val();
-          console.log(address)
-          geocoder.geocode(
-            {
-              address: address
-            },
-            function(results, status) {
-              console.log('status', status);
-              if (status == 'OK') {
-                console.log(results[0].geometry.location.lng())
-                $('#point_lat').val(results[0].geometry.location.lat())
-                $('#point_long').val(results[0].geometry.location.lng())
-            } else {
-              alert('The address you typed in is incorrect, please try again ' + status);
-            }
-            $('#new_point').slideDown('slow');
-            $('#new_point_address button').hide();
-          });
-        //console.log(res);
-        // $('#new_point').slideDown('slow');
-        // $('#new_point_address button').hide();
-      //}).catch(err => {console.log(err)});
+    var address = $('#point_add').val();
+    console.log(address)
+    geocoder.geocode(
+      {
+        address: address
+      },
+      function (results, status) {
+        console.log('status', status);
+        if (status == 'OK') {
+          console.log(results[0].geometry.location.lng())
+          $('#point_lat').val(results[0].geometry.location.lat())
+          $('#point_long').val(results[0].geometry.location.lng())
+        } else {
+          alert('The address you typed in is incorrect, please try again ' + status);
+        }
+        $('#new_point').slideDown('slow');
+        $('#new_point_address button').hide();
+      });
   })
   //Final submission to point
   $('#new_point').on('submit', (evt) => {
