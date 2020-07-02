@@ -41,7 +41,7 @@ Mappy Trails: because no trip should be unremarkable.
 - Google Maps Geocoding API
 
 ## Final Product
-!["Overview"]()
+!["Overview"](https://github.com/senhorgomes/mappy_trails/blob/master/docs/overview-my-maps.gif?raw=true)
 
 ## Getting Started
 - Install all dependencies (using the `npm install` command).
