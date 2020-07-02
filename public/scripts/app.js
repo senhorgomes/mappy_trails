@@ -1,12 +1,7 @@
 $(() => {
-  // $.ajax({
-  //   method: "GET",
-  //   url: "/api/users"
-  // }).done((users) => {
-  //   for(user of users) {
-  //     $("<div>").text(user.name).appendTo($("body"));
-  //   }
-  // });;
+
+
+
   let likeBtn = document.querySelector('.ico');
   likeBtn.addEventListener('click', function () {
     likeBtn.classList.toggle('liked');
@@ -17,5 +12,13 @@ $(() => {
     })
   })
 
+  $('#unfavorite').addEventListener('click',function(evt){
+    evt.preventDefault();
+    const favemapId = row.data("mapid")
+    $.ajax({
+      method: "POST",
+      url: "/maps/"+favemapId+"/favorites/"
+    })
+  });
 
 });

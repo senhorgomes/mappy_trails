@@ -443,15 +443,25 @@ module.exports = (db) => {
   //deleting favourited maps
   router.post("/maps/:favemapid/favorites/", (req, res) => {
     //delete map from data base
-    id = req.params.favemapid;
+    map_id = req.params.favemapid;
     const userId = req.session.userId;
     if (!isLoggedIn(req.session)) {
       res.status(403).send("Please login or register first.");
     } else {
+      const query = `SELECT id FROM users
+        WHERE email = $1;`
+    db.query(query, [req.session.userId])
+      .then(data => {
+
+        return data;
+
+      }).then((data) => {
+        let ownerId = data.rows[0].id;
       let query = `DELETE FROM usermaps
-      WHERE map_id = $1`;
-      db.query(query, [id])
-        .then(data => {
+      WHERE map_id = $1
+      AND user_id =$2`;
+      db.query(query, [map_id, ownerId])
+       }) .then(data => {
 
           res.redirect("/profile/maps")
         })
