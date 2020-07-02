@@ -11,7 +11,7 @@
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgNY0jokZRJtIF_RJyCC0J7VYsqiCX18"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAKMuwR9-WMXAMOmMjCO65jI00oMFXxjk"></script>
     <script type="text/javascript" src="/scripts/newMap.js"></script>
 
   </head>
@@ -41,7 +41,7 @@
   <!--New POINTS area-->
       <form id="new_point_address" action="/maps/:mapId/points/" method="post">
         <label for="point_description">Let's add a point to this map, first, let's start with the address.</label>
-        <input name="point_address" type="text" class="form-control" placeholder="E.g., '123 Avenue Road', '1245 Dupont St.'">
+        <input id="point_add" name="point_address" type="text" class="form-control" placeholder="E.g., '123 Avenue Road', '1245 Dupont St.'">
         <button class="buttons" type="submit">Mark the Spot</button>
       </form>
   <!--New POINTS submitted area-->
