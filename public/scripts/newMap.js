@@ -34,11 +34,11 @@ $(() => {
           console.log(results[0].geometry.location.lng())
           $('#point_lat').val(results[0].geometry.location.lat())
           $('#point_long').val(results[0].geometry.location.lng())
+          $('#new_point').slideDown('slow');
+          $('#new_point_address button').hide();
         } else {
           alert('The address you typed in is incorrect, please try again ' + status);
         }
-        $('#new_point').slideDown('slow');
-        $('#new_point_address button').hide();
       });
   })
   //Final submission to point
@@ -52,6 +52,11 @@ $(() => {
       .then((res) => {
         $('#new_point textarea').val("");
         $('#new_point input').val("");
+        $('#point_add').val("");
+        $('#point_lat').val("");
+        $('#point_long').val("");
+        $('#new_point').hide();
+        $('#new_point_address button').slideDown('slow');
         console.log(res);
       });
   });
