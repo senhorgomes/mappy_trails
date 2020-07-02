@@ -27,7 +27,8 @@ $(() => {
     //     .serialize()
     // })
     //   .then((res) => {
-          var address = $('#new_point_address').value;
+          var address = $('#point_add').val();
+          console.log(address)
           geocoder.geocode(
             {
               address: address
@@ -35,9 +36,9 @@ $(() => {
             function(results, status) {
               console.log('status', status);
               if (status == 'OK') {
-                console.log(results[0].geometry.location)
-                $('#point_lat').val(results[0].geometry.location[0])
-                $('#point_long').val(results[0].geometry.location[1])
+                console.log(results[0].geometry.location.lng())
+                $('#point_lat').val(results[0].geometry.location.lat())
+                $('#point_long').val(results[0].geometry.location.lng())
             } else {
               alert('The address you typed in is incorrect, please try again ' + status);
             }
